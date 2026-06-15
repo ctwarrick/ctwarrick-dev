@@ -1,0 +1,35 @@
+{#- =========================================================================
+   404.html — on-brand not-found page, translated from
+   _design_reference/NotFound.jsx in spirit (the "waveoff / foul deck" copy)
+   but built only from component classes already promoted into
+   components.css/site.css (cw-grid-bg, cw-kicker-c, cw-btn, cw-badge) — the
+   reference's bespoke .nf/.term404 styles were never promoted, so this page
+   sticks to the existing design-system primitives instead of inventing
+   unstyled classes.
+
+   Extends base.html so the shared header/nav/footer render (FR-004).
+   app.py registers the 404 error handler that renders this template.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, badge, button, icon %}
+
+{% block title %}404 — Foul Deck · {{ site.name }}{% endblock %}
+{% block meta_description %}Page not found — {{ site.name }}, {{ site.role }}.{% endblock %}
+
+{% block content %}
+<section class="hero cw-grid-bg">
+  <div class="wrap">
+    {{ kicker("Waveoff · Foul deck · Go around") }}
+    <h1>Waveoff, waveoff . . .</h1>
+    <p class="hero__lead">
+      Deck's not clear — the page you wanted isn't spotted. Waved off before the groove.
+      {{ badge("FOUL DECK", variant="gold") }}
+    </p>
+    <p class="hero__lead">A 404 is just a query that returns no rows. This one does.</p>
+    <div class="hero__cta">
+      {{ button("Take it around again", variant="primary", size="lg", href=url_for("home"), icon_right=icon("arrow-right", 18)) }}
+      {{ button("Tell me what broke", variant="secondary", size="lg", href="mailto:" ~ site.email, icon=icon("mail", 18)) }}
+    </div>
+  </div>
+</section>
+{% endblock %}

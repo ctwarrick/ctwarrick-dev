@@ -1,0 +1,103 @@
+{#- =========================================================================
+   home.html — Jinja translation of _design_reference/Home.jsx.
+
+   Sections: Hero, HomeStats (statrow), HomeWork (recent-work preview,
+   route passes work=content.WORK_CIVILIAN[:2]), ContactBand.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, badge, button, stat, icon %}
+
+{% block title %}{{ site.name }} — {{ site.role }}{% endblock %}
+{% block meta_description %}{{ site.name }} — {{ site.role }}. I make systems observable and delivery predictable.{% endblock %}
+
+{% block content %}
+<section class="hero cw-grid-bg">
+  <div class="wrap hero__grid">
+    <div>
+      {{ kicker("Technical Program Manager · Builder") }}
+      <h1>I make systems observable<br>and delivery <span class="accent">predictable.</span></h1>
+      <p class="hero__lead">
+        I'm Chris — a technical program manager who works close to the code. I use data to surface
+        a team's problems and Lean to solve them, and I'll write the tooling myself when the team
+        doesn't have time.
+      </p>
+      <div class="hero__cta">
+        {{ button("See the work", variant="primary", size="lg", href=url_for("work"), icon_right=icon("arrow-right", 18)) }}
+        {{ button("What I'm building", variant="secondary", size="lg", href=url_for("building"), icon=icon("terminal", 18)) }}
+      </div>
+      <div class="hero__meta">
+        <span>{{ icon("map-pin", 14) }} Greater Seattle · open to relocation</span>
+        <span>{{ icon("anchor", 14) }} U.S. Navy veteran</span>
+        <span>{{ icon("git-branch", 14) }} github.com/ctwarrick</span>
+      </div>
+    </div>
+    <div class="hero__portrait">
+      <img src="{{ url_for('static', filename='img/chris-warrick-headshot.jpg') }}" alt="Chris Warrick">
+      <div class="hero__tickets">
+        <span class="dot"></span>
+        <span class="t">Open to new work</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunken">
+  <div class="wrap">
+    <div class="statrow">
+      {% for s in stats %}
+        {{ stat(s.value, label=s.label, suffix=s.get("suffix"), prefix=s.get("prefix"), tone=s.get("tone", "default")) }}
+      {% endfor %}
+      <div style="flex:1; min-width:220px; align-self:center">
+        <p style="color:var(--text-secondary); margin:0; font-size:var(--text-sm); line-height:1.6">
+          Real numbers from real teams. The point isn't the figures — it's that I measure flow, not
+          theater, and I can pull them myself.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div>
+        {{ kicker("Right now", index="01") }}
+        <h2>What I'm working on</h2>
+      </div>
+      {{ button("All experience", variant="ghost", href=url_for("work"), icon_right=icon("arrow-right", 16)) }}
+    </div>
+    <div class="worklist">
+      {% for w in work %}
+      <div class="work">
+        <div>
+          <div class="work__period">{{ w.period }}</div>
+          <div class="work__org">{{ w.org }}</div>
+        </div>
+        <div>
+          <div class="work__head">
+            <h3 class="work__role">{{ w.role }}</h3>
+            {{ badge(w.tag, variant="gold" if w.get("service") else "teal") }}
+          </div>
+          <p class="work__sum">{{ w.summary }}</p>
+          <ul class="work__out">
+            {% for o in w.outcomes %}<li>{{ o }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta cw-dot-bg">
+  <div class="wrap wrap--narrow">
+    {{ kicker("Let's talk", tone="gold", rule=false) }}
+    <h2>Want delivery that's predictable — and observable?</h2>
+    <p>That's the whole job. I'm equally at home debugging a pipeline, facilitating a retrospective, or briefing the C-suite.</p>
+    <div class="cta__row">
+      {{ button(site.email, variant="gold", size="lg", href="mailto:" ~ site.email, icon=icon("mail", 18)) }}
+      {{ button("See what I build", variant="secondary", size="lg", href=url_for("building")) }}
+    </div>
+  </div>
+</section>
+{% endblock %}

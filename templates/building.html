@@ -1,0 +1,38 @@
+{#- =========================================================================
+   building.html — Jinja translation of _design_reference/Projects.jsx.
+
+   ProjectCard -> the {% for p in projects %} loop below. Route passes
+   projects=content.PROJECTS.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, icon %}
+
+{% block title %}Building — {{ site.name }}{% endblock %}
+{% block meta_description %}Tools {{ site.name }} has actually shipped — projects where he writes the code the team doesn't have time for.{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div>
+        {{ kicker("Building", index="01") }}
+        <h1>Tools I've actually shipped</h1>
+        <p>I don't just run the meeting — I write the code the team doesn't have time to. A sample of what that looks like.</p>
+      </div>
+    </div>
+    <div class="projgrid">
+      {% for p in projects %}
+      <div class="proj">
+        <div class="proj__top">
+          <span class="proj__icon">{{ icon(p.icon, 22) }}</span>
+          <span class="proj__stack">{{ p.stack }}</span>
+        </div>
+        <h2 class="proj__name">{{ p.name }}</h2>
+        <p class="proj__blurb">{{ p.blurb }}</p>
+        <div class="proj__link">{{ icon("git-branch", 14) }} {{ p.link }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

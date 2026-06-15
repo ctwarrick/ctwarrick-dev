@@ -1,0 +1,61 @@
+{#- =========================================================================
+   service.html — Jinja translation of _design_reference/Service.jsx.
+
+   The tucked-away Naval Aviation record. Reuses the .work timeline markup
+   from work.html and the .svstats block (classes already in site.css).
+   Route passes service=content.SERVICE; active=active_for("service")
+   marks the Work nav item active.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, icon %}
+
+{% block title %}Service Record — {{ site.name }}{% endblock %}
+{% block meta_description %}{{ service.intro }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <a class="backlink" style="margin-bottom:26px" href="{{ url_for('work') }}">
+      {{ icon("arrow-left", 14) }} Back to the work
+    </a>
+    <div class="section__head" style="margin-bottom:30px">
+      <div>
+        {{ kicker("Service Record · " ~ service.span, index="01", tone="gold") }}
+        <h1>Twenty years in Naval Aviation.</h1>
+        <p style="max-width:62ch">{{ service.intro }}</p>
+      </div>
+    </div>
+    <div class="svstats">
+      {% for h in service.headline %}
+      <div class="svstat">
+        <div class="svstat__v">{{ h.value }}</div>
+        <div class="svstat__l">{{ h.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="worklist" style="margin-top:26px">
+      {% for r in service.roles %}
+      <div class="work">
+        <div>
+          <div class="work__period">{{ r.period }}</div>
+          <div class="work__org">{{ r.org }}</div>
+        </div>
+        <div>
+          <div class="work__head">
+            <h2 class="work__role svrole"><span class="svrole__icon">{{ icon(r.icon, 18) }}</span>{{ r.role }}</h2>
+          </div>
+          <p class="work__sum">{{ r.summary }}</p>
+          <ul class="work__out">
+            {% for o in r.outcomes %}<li>{{ o }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="svnote">
+      Proud of it — just not the headline.
+      <a class="inlinelink" href="{{ url_for('work') }}">Back to what I do now →</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{#- =========================================================================
+   writing.html — translation of _design_reference/Writing.jsx.
+
+   Notes on the translation:
+   - <WRKicker index="01">Writing</WRKicker>  ->  {{ kicker("Writing", index="01") }}
+   - featured = posts with featured=true, or posts[0] as fallback
+   - rest = posts minus the featured post (most-recent-first, per posts.load_posts())
+   - <div className="feature" onClick={...}>  ->  <a class="feature" href="...">
+     (no client JS for navigation — plain links)
+   - Edge Case: an empty posts/ renders a clean empty state instead of the
+     feature block + post list.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, badge, button, icon %}
+
+{% block title %}Writing — {{ site.name }}{% endblock %}
+{% block meta_description %}Field notes on delivery — opinions on shipping, process, and the occasional war story.{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap wrap--narrow">
+    <div class="section__head" style="margin-bottom: 28px">
+      <div>
+        {{ kicker("Writing", index="01") }}
+        <h1>Field notes on delivery</h1>
+        <p>Opinions on shipping, process, and the occasional war story. Roughly monthly.</p>
+      </div>
+    </div>
+
+    {% if posts %}
+      {% set featured = (posts | selectattr("featured") | first) or posts[0] %}
+      {% set rest = posts | rejectattr("id", "eq", featured.id) | list %}
+
+      <a class="feature" href="{{ url_for('article', post_id=featured.id) }}">
+        {{ kicker("Latest", tone="gold", rule=false) }}
+        <h2 class="feature__title">{{ featured.title }}</h2>
+        <p class="feature__excerpt">{{ featured.excerpt }}</p>
+        <div style="display:flex;align-items:center;gap:14px">
+          {{ button("Read it", variant="gold", size="sm", icon_right=icon("arrow-right", 16)) }}
+          <span style="font-family:var(--font-mono);font-size:12px;color:#a9c0db">
+            {{ featured.date_display }}{% if featured.read %} · {{ featured.read }}{% endif %}
+          </span>
+        </div>
+      </a>
+
+      <div class="postlist">
+        {% for p in rest %}
+        <a class="post" href="{{ url_for('article', post_id=p.id) }}">
+          <div>
+            <div class="post__meta">
+              {{ badge(p.tag, variant="teal") }}
+              <span>{{ p.date_display }}</span>
+              {% if p.read %}<span>·</span><span>{{ p.read }}</span>{% endif %}
+            </div>
+            <h2 class="post__title">{{ p.title }}</h2>
+            <p class="post__excerpt">{{ p.excerpt }}</p>
+          </div>
+          <div class="post__arrow">{{ icon("arrow-up-right", 22) }}</div>
+        </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="cw-card" style="text-align:center;padding:48px 24px">
+        <p style="color:var(--text-secondary);margin:0">
+          Nothing published yet — check back soon for field notes on delivery.
+        </p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,7 +1,19 @@
 [project]
 name = "ctwarrick-dev"
 version = "0.1.0"
-description = "Add your description here"
+description = "Public personal website for Chris Warrick — Flask/Jinja authored, frozen to static HTML"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "flask",
+    "frozen-flask",
+    "markdown",
+    "pygments",
+    "python-frontmatter",
+    "pytest",
+    "beautifulsoup4",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

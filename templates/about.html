@@ -1,0 +1,90 @@
+{#- =========================================================================
+   about.html — Jinja translation of _design_reference/About.jsx.
+
+   Renders the bio, skills (SKILLS) and certs (CERTS) badge grids, and the
+   education list. Route passes skills=content.SKILLS, certs=content.CERTS.
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, badge, button, icon %}
+
+{% block title %}About — {{ site.name }}{% endblock %}
+{% block meta_description %}Ex-Expeditors Global Technology, ex-Naval Aviation. A technical program manager and builder who works close to the code.{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head" style="margin-bottom:40px">
+      <div>
+        {{ kicker("About", index="01") }}
+        <h1>Ship the work, not the ritual.</h1>
+      </div>
+    </div>
+    <div class="about">
+      <div class="about__photo">
+        <img src="{{ url_for('static', filename='img/chris-warrick-headshot.jpg') }}" alt="Chris Warrick">
+        <div class="skillgrid" style="margin-top:16px">
+          {{ badge("U.S. Navy Veteran", variant="gold") }}
+          {{ badge("Open to work", variant="blue", dot=true) }}
+        </div>
+      </div>
+      <div>
+        <p class="about__lede">
+          Ex-Expeditors Global Technology, ex-Naval Aviation. A technical program manager and
+          builder who works close to the code.
+        </p>
+        <p>
+          I have a passion for using <b>data to surface a team's problems</b>, Lean and Agile principles
+          to help solve them, and for doing whatever it takes to make that happen — whether that's dealing
+          with people or getting my hands dirty writing the code my team doesn't have time to write. (Though
+          I'm not above enlisting AI agents so my hands don't get quite so dirty these days.)
+        </p>
+        <p>
+          I'm drawn to the seam between <b>delivery and engineering</b>: Monte Carlo forecasting and XmR
+          process-behavior charts instead of story-point voodoo; REST API automation and CI/CD coupled to
+          Value Stream Mapping and Theory of Constraints; dashboards that make system state legible at a glance.
+          On call at 3 AM, you don't rise to the occasion — you fall to the level of your telemetry.
+        </p>
+        <p>
+          My thesis: the most useful thing a TPM can do is <b>decrease friction and toil</b> and help build a
+          system where doing the right thing is easy and baked into the architecture itself. Frameworks can help
+          or hinder that. Use them appropriately.
+        </p>
+        <p>
+          Before all of this I flew. EA-6B Prowler Naval Flight Officer — <b>1,094 flight hours, 16 missions over
+          Afghanistan, 151 carrier arrested landings</b> — who rose to unit second-in-command and briefed up to a
+          four-star Admiral. I'm proud of the service. I just don't lead with it.
+          <a class="inlinelink" href="{{ url_for('service') }}">The full service record →</a>
+        </p>
+
+        <div style="margin-top:30px">
+          {{ kicker("Skills & tooling", rule=false, tone="muted") }}
+          <div class="skillgrid" style="margin-top:14px">
+            {% for s in skills %}{{ badge(s, variant="neutral", solid=true) }}{% endfor %}
+          </div>
+        </div>
+
+        <div style="margin-top:26px">
+          {{ kicker("Certifications", rule=false, tone="muted") }}
+          <div class="skillgrid" style="margin-top:14px">
+            {% for c in certs %}{{ badge(c, variant="teal") }}{% endfor %}
+          </div>
+        </div>
+
+        <div style="margin-top:26px">
+          {{ kicker("Education", rule=false, tone="muted") }}
+          <ul style="list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:10px">
+            <li><b style="font-family:var(--font-display)">M.S., Information Science</b> — Penn State <span style="color:var(--text-muted); font-family:var(--font-mono); font-size:13px">· expected 2027</span></li>
+            <li><b style="font-family:var(--font-display)">B.S., Information Sciences &amp; Technology</b> — Penn State</li>
+            <li><b style="font-family:var(--font-display)">Diploma, College of Naval Command &amp; Staff</b> — U.S. Naval War College <span style="color:var(--gold-700); font-family:var(--font-mono); font-size:13px">· Highest Distinction</span></li>
+          </ul>
+        </div>
+
+        <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap">
+          {{ button("See the work", variant="primary", href=url_for("work"), icon=icon("file-text", 18)) }}
+          {{ button("Get in touch", variant="secondary", href="mailto:" ~ site.email, icon=icon("mail", 18)) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

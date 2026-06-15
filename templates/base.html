@@ -1,0 +1,109 @@
+{#- =========================================================================
+   base.html — site shell: <head>, header, footer, theme toggle.
+   Every page does {% extends "base.html" %} and fills {% block content %}.
+   ========================================================================= -#}
+{% from "_macros.html" import button, monogram, icon %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }} — {{ site.role }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ site.name }} — {{ site.role }}.{% endblock %}">
+
+  {#- Self-contained Open Graph / social-preview tags (no analytics, no
+     external resources). Pages override og_title/og_description/og_type/
+     og_image as needed; defaults reuse the page <title> and description and
+     the site headshot (static/img/chris-warrick-headshot.jpg) as a
+     self-hosted social-preview image. TODO: swap in a dedicated 1200x630
+     social card under static/img/ if/when one is designed; the headshot is
+     a reasonable default until then. -#}
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ self.meta_description() }}{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ site.url }}{{ url_for('static', filename='img/chris-warrick-headshot.jpg') }}{% endblock %}">
+  <meta property="og:url" content="{{ site.url }}{{ request.path }}">
+
+  {#- No-FOUC theme: set data-theme from localStorage BEFORE first paint.
+     If no choice is stored yet, fall back to the OS prefers-color-scheme. -#}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("cw-theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var t = stored || (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+
+  {#- Load order matters: tokens -> components -> page layout. -#}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments.css') }}">
+  <style> html { scroll-behavior: smooth; } </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="site">
+    <header class="hdr">
+      <div class="wrap hdr__in">
+        <a class="navlink" style="padding:0;background:none" href="{{ url_for('home') }}" aria-label="Home">
+          {{ monogram(variant="lockup", size="sm", role="") }}
+        </a>
+        <nav class="hdr__nav">
+          {% for n in nav %}
+            <a class="navlink {{ 'navlink--on' if active == n.id else '' }}" href="{{ url_for(n.id) }}">{{ n.label }}</a>
+          {% endfor %}
+        </nav>
+        <div class="hdr__right">
+          <button class="iconbtn" id="theme-toggle" aria-label="Toggle theme">
+            <span data-theme-icon="light">{{ icon("moon", 18) }}</span>
+            <span data-theme-icon="dark" hidden>{{ icon("sun", 18) }}</span>
+          </button>
+          {{ button("Get in touch", variant="primary", size="sm",
+                    href="mailto:" ~ site.email, icon_right=icon("arrow-right", 16)) }}
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="ftr" id="contact">
+      <div class="wrap ftr__in">
+        {{ monogram(variant="lockup", size="sm") }}
+        <div class="ftr__social">
+          <a class="iconbtn" href="https://{{ site.github }}" aria-label="GitHub">{{ icon("github", 18) }}</a>
+          <a class="iconbtn" href="#" aria-label="LinkedIn">{{ icon("linkedin", 18) }}</a>
+          <a class="iconbtn" href="mailto:{{ site.email }}" aria-label="Email">{{ icon("mail", 18) }}</a>
+        </div>
+        <div class="ftr__copy">© 2026 {{ site.name }} · Built on the CW system</div>
+      </div>
+    </footer>
+  </div>
+
+  {#- The only client JS the site needs: toggle + persist the theme. -#}
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById("theme-toggle");
+      function sync() {
+        var dark = root.getAttribute("data-theme") === "dark";
+        document.querySelectorAll('[data-theme-icon="light"]').forEach(function (e) { e.hidden = dark; });
+        document.querySelectorAll('[data-theme-icon="dark"]').forEach(function (e) { e.hidden = !dark; });
+      }
+      sync();
+      if (btn) btn.addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("cw-theme", next); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

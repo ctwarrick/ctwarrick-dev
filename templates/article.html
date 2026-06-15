@@ -1,0 +1,47 @@
+{#- =========================================================================
+   article.html — translation of _design_reference/Article.jsx.
+
+   Notes on the translation:
+   - <button className="backlink" onClick={onBack}>  ->  <a class="backlink" href="{{ url_for('writing') }}">
+     (a plain link back to the writing index — no client JS for navigation)
+   - the rotated arrow-right icon  ->  icon("arrow-left", 14)
+   - <ARBadge variant="teal">{post.tag}</ARBadge>  ->  {{ badge(post.tag, variant="teal") }}
+   - the hardcoded article body in the JSX  ->  {{ post.body_html | safe }}
+     (rendered at build time by posts.load_posts() — trusted Markdown, not
+     user input)
+   - the "Written by" footer block is carried verbatim from Article.jsx
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import badge, kicker, icon %}
+
+{% block title %}{{ post.title }} — {{ site.name }}{% endblock %}
+{% block meta_description %}{{ post.excerpt }}{% endblock %}
+{% block og_type %}article{% endblock %}
+
+{% block content %}
+<article class="article">
+  <div class="wrap">
+    <div class="article__head">
+      <a class="backlink" href="{{ url_for('writing') }}">
+        {{ icon("arrow-left", 14) }} All writing
+      </a>
+      <h1>{{ post.title }}</h1>
+      <div class="article__meta">
+        {{ badge(post.tag, variant="teal") }}
+        {% if post.read %}<span>{{ icon("clock", 13) }} {{ post.read }}</span>{% endif %}
+        <span>{{ post.date_display }}</span>
+      </div>
+    </div>
+    <div class="article__body">
+      {{ post.body_html | safe }}
+    </div>
+    <div class="wrap--narrow" style="max-width:var(--container-md);margin:44px auto 0">
+      <div style="border-top:1px solid var(--border);padding-top:22px;display:flex;align-items:center;gap:14px">
+        {{ kicker("Written by", rule=false, tone="muted") }}
+        <strong style="font-family:var(--font-display)">Chris Warrick</strong>
+        <span style="color:var(--text-muted);font-size:14px">— TPM, occasional script author</span>
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock %}

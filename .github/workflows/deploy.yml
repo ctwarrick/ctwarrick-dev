@@ -1,0 +1,63 @@
+name: Deploy
+
+# Publish ctwarrick.dev: a content-only push to main rebuilds and deploys the
+# frozen static site with no manual server step (FR-014, SC-005). The site is
+# pure static output (build/) — Azure/static-web-apps-deploy uploads it
+# directly with skip_app_build: true.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest -q
+
+      # SC-009/FR-022: fail the build if a deploy token, publish profile, or
+      # Azure subscription/tenant id was ever committed to a tracked file.
+      # The real deploy token comes only from the GitHub Actions secret store
+      # (AZURE_STATIC_WEB_APPS_API_TOKEN below) and must never appear here.
+      - name: Secret scan (tracked files)
+        run: |
+          set -euo pipefail
+          # Matches likely-leaked deploy tokens/publish profiles/Azure ids as
+          # literal values, not the GitHub Actions `secrets.*` references
+          # (e.g. `${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}`, which is
+          # how this workflow itself refers to the token). This workflow file
+          # is excluded from the scan because it legitimately documents the
+          # pattern/secret *names*, never their values.
+          PATTERN='(swa_[A-Za-z0-9_-]{20,}|<publishProfile|<publishData|"subscriptionId"[[:space:]]*:[[:space:]]*"[0-9a-fA-F-]{36}"|"tenantId"[[:space:]]*:[[:space:]]*"[0-9a-fA-F-]{36}")'
+          if git ls-files -z \
+              | grep -zv '^\.github/workflows/deploy\.yml$' \
+              | xargs -0 grep -lInE "$PATTERN" -- 2>/dev/null; then
+            echo "::error::Possible committed secret/credential matched the secret-scan pattern above."
+            exit 1
+          fi
+          echo "No committed secrets matched the secret-scan pattern."
+
+      - name: Freeze the site
+        run: uv run python freeze.py
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: "build"
+          output_location: ""
+          skip_app_build: true
