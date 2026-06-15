@@ -1,0 +1,4 @@
+# Azure App Service "Startup Command" (Configuration → General settings).
+# Paste this single line into the Startup Command box, or set it via CLI:
+#   az webapp config set -g <rg> -n <app> --startup-file "gunicorn --bind=0.0.0.0 --timeout 600 app:app"
+gunicorn --bind=0.0.0.0 --timeout 600 app:app

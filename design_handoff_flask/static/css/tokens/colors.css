@@ -1,0 +1,160 @@
+/* ============================================================
+   COLORS — Chris Warrick Design System
+   ------------------------------------------------------------
+   A cool, technical palette. Deep navy foundation (an abstracted
+   nod to Nittany Navy & naval service), a confident mid-blue
+   primary, a technical teal accent, and a sparing aviator-gold
+   accent — the only warm note in the system. Never red as a
+   primary, never earthy.
+
+   Structure:
+     1. Brand ramps  (navy / blue / teal / gold)
+     2. Cool slate neutrals (oklch, blue undertone)
+     3. Status hues
+     4. Semantic aliases — light theme (:root)
+     5. Semantic aliases — dark theme ([data-theme="dark"])
+   ============================================================ */
+
+:root {
+  /* ---- Brand: Navy (foundation) ---- */
+  --navy-950: #06122a;
+  --navy-900: #0a1a33;
+  --navy-800: #0e2647;
+  --navy-700: #143258;
+  --navy-600: #1c4576;
+
+  /* ---- Brand: Blue (primary) ---- */
+  --blue-700: #1c4f8a;
+  --blue-600: #235c9e;   /* primary */
+  --blue-500: #2e6fb8;
+  --blue-400: #4a8ad0;
+  --blue-300: #7db0e6;
+  --blue-200: #b4d3f2;
+
+  /* ---- Brand: Teal (technical accent) ---- */
+  --teal-700: #0e6e78;
+  --teal-600: #0f8b95;
+  --teal-500: #14a3ad;   /* accent */
+  --teal-400: #34bfc8;
+  --teal-300: #7ad7dd;
+
+  /* ---- Brand: Gold (aviator accent — sparing). Anchored on USN gold #E8B00F ---- */
+  --gold-700: #8a6a00;   /* deep gold — text/border on pale gold, kept dark for contrast */
+  --gold-600: #cf9c08;   /* bright fill (light-theme --gold) */
+  --gold-500: #e8b00f;   /* the Navy gold — primary accent */
+  --gold-400: #f5cb3f;
+  --gold-300: #fbe48f;
+
+  /* ---- Cool slate neutrals (blue undertone) ---- */
+  --slate-50:  oklch(0.985 0.005 245);
+  --slate-100: oklch(0.965 0.008 245);
+  --slate-200: oklch(0.922 0.013 245);
+  --slate-300: oklch(0.862 0.017 246);
+  --slate-400: oklch(0.722 0.022 248);
+  --slate-500: oklch(0.602 0.028 250);
+  --slate-600: oklch(0.498 0.032 252);
+  --slate-700: oklch(0.398 0.032 254);
+  --slate-800: oklch(0.300 0.030 256);
+  --slate-900: oklch(0.222 0.028 258);
+  --slate-950: oklch(0.165 0.026 260);
+
+  --white: #ffffff;
+  --black: #04101f;
+
+  /* ---- Status hues (cool-leaning) ---- */
+  --success-500: #1f9d6b;
+  --success-bg:  #e3f5ec;
+  --warning-500: #d18b1e;   /* warm but reserved for warnings */
+  --warning-bg:  #faf0db;
+  --danger-500:  #cf4040;   /* red lives here only — never primary */
+  --danger-bg:   #fbe6e6;
+  --info-500:    var(--blue-500);
+  --info-bg:     #e6f0fb;
+
+  /* ========================================================
+     SEMANTIC ALIASES — LIGHT THEME (default)
+     ======================================================== */
+  --bg:              #f5f8fc;
+  --bg-pattern:      #eef3f9;
+  --surface:         #ffffff;
+  --surface-2:       var(--slate-100);
+  --surface-sunken:  #eef3f9;
+  --surface-inverse: var(--navy-900);
+
+  --border:          var(--slate-200);
+  --border-strong:   var(--slate-300);
+  --border-inverse:  var(--navy-700);
+
+  --text:            var(--navy-900);
+  --text-secondary:  var(--slate-600);
+  --text-muted:      var(--slate-500);
+  --text-inverse:    #eaf1f8;
+  --text-on-primary: #ffffff;
+  --text-on-accent:  #04101f;
+
+  --primary:         var(--blue-600);
+  --primary-hover:   var(--blue-700);
+  --primary-active:  var(--navy-700);
+  --primary-soft:    var(--info-bg);
+
+  --accent:          var(--teal-600);
+  --accent-hover:    var(--teal-700);
+  --accent-soft:     #ddf3f4;
+
+  --gold:            var(--gold-600);
+  --gold-soft:       #faf0c6;
+
+  --link:            var(--blue-600);
+  --link-hover:      var(--blue-700);
+
+  --focus-ring:      var(--blue-400);
+  --selection:       var(--blue-200);
+
+  /* shadow tint (cool navy) */
+  --shadow-color: 218 60% 16%;
+}
+
+/* ==========================================================
+   SEMANTIC ALIASES — DARK THEME
+   Apply with <html data-theme="dark"> or class .theme-dark
+   ========================================================== */
+[data-theme="dark"],
+.theme-dark {
+  --bg:              var(--navy-950);
+  --bg-pattern:      #0a1c38;
+  --surface:         var(--navy-900);
+  --surface-2:       var(--navy-800);
+  --surface-sunken:  #081730;
+  --surface-inverse: #eaf1f8;
+
+  --border:          #163057;
+  --border-strong:   #1f3f6e;
+  --border-inverse:  var(--slate-300);
+
+  --text:            #eaf1f8;
+  --text-secondary:  #a9c0db;
+  --text-muted:      #6f8aac;
+  --text-inverse:    var(--navy-900);
+  --text-on-primary: #ffffff;
+  --text-on-accent:  #04101f;
+
+  --primary:         var(--blue-400);
+  --primary-hover:   var(--blue-300);
+  --primary-active:  var(--blue-300);
+  --primary-soft:    #11294a;
+
+  --accent:          var(--teal-400);
+  --accent-hover:    var(--teal-300);
+  --accent-soft:     #0c343a;
+
+  --gold:            var(--gold-400);
+  --gold-soft:       #2f2611;
+
+  --link:            var(--blue-300);
+  --link-hover:      var(--blue-200);
+
+  --focus-ring:      var(--blue-400);
+  --selection:       #1d4576;
+
+  --shadow-color: 220 70% 4%;
+}

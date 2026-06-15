@@ -1,0 +1,11 @@
+/* ============================================================
+   Chris Warrick Design System — global entry point
+   This file is a manifest of @imports only. Consumers link
+   this single stylesheet. Do not add rules here directly.
+   ============================================================ */
+
+@import url('./tokens/fonts.css');
+@import url('./tokens/colors.css');
+@import url('./tokens/typography.css');
+@import url('./tokens/spacing.css');
+@import url('./tokens/base.css');

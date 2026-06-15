@@ -1,0 +1,16 @@
+/* ============================================================
+   FONTS — Chris Warrick Design System (Flask static build)
+   Display + body load from Google Fonts; the mono is self-hosted.
+   NOTE vs. the design-system original: the @font-face url() now
+   points at ../fonts/ (static/fonts/) instead of ../assets/fonts/.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+@font-face {
+  font-family: 'Old Timey Code';
+  src: url('../fonts/OldTimeyCode.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

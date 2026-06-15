@@ -1,0 +1,58 @@
+{#- =========================================================================
+   work.html — WORKED EXAMPLE. This is the full Jinja translation of
+   _design_reference/Work.jsx. Use it as the pattern for the other pages.
+
+   Notes on the translation:
+   - <WKicker index="01">  ->  {{ kicker(..., index="01") }}
+   - <WorkItem w={w}>       ->  the {% for w in work %} loop below
+   - window.WORK.filter(!service)  ->  done in app.py as WORK_CIVILIAN
+   - the dashed "service link" card stays plain HTML (.servicelink in site.css)
+   ========================================================================= -#}
+{% extends "base.html" %}
+{% from "_macros.html" import kicker, badge, icon %}
+
+{% block title %}Work — {{ site.name }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div>
+        {{ kicker("Experience", index="01") }}
+        <h2>Getting things across the line.</h2>
+        <p>Two decades of it — Naval Aviation, then a Fortune 500 delivery org, now independent builds. Same instinct throughout: clear the path, measure the flow, tell the truth about risk.</p>
+      </div>
+    </div>
+
+    <div class="worklist">
+      {% for w in work %}
+      <div class="work">
+        <div>
+          <div class="work__period">{{ w.period }}</div>
+          <div class="work__org">{{ w.org }}</div>
+        </div>
+        <div>
+          <div class="work__head">
+            <h3 class="work__role">{{ w.role }}</h3>
+            {{ badge(w.tag, variant="gold" if w.get("service") else "teal") }}
+          </div>
+          <p class="work__sum">{{ w.summary }}</p>
+          <ul class="work__out">
+            {% for o in w.outcomes %}<li>{{ o }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {#- Tucked-away pointer to the Naval Aviation record. -#}
+    <a class="servicelink" href="{{ url_for('service') }}">
+      <span class="svl__icon">{{ icon("anchor", 20) }}</span>
+      <span class="svl__txt">
+        <b>Before the pipeline: 20 years in Naval Aviation.</b> Where the habit started — tucked away, in full, for anyone who wants it.
+      </span>
+      <span class="svl__cta">The service record →</span>
+    </a>
+  </div>
+</section>
+{% endblock %}

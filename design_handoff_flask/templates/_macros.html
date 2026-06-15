@@ -1,0 +1,131 @@
+{#- =========================================================================
+   _macros.html — Chris Warrick Design System components as Jinja macros.
+   Each macro emits the EXACT same class names the React component does,
+   so static/css/components.css styles them with zero changes.
+
+   Usage in a template:
+     {% from "_macros.html" import button, badge, kicker, stat, icon %}
+     {{ button("See the work", variant="primary", size="lg",
+               href=url_for("work"), icon_right=icon("arrow-right")) }}
+   ========================================================================= -#}
+
+{#- ---------- Button ----------
+    React: <Button variant size icon iconRight block href> children </Button> -#}
+{% macro button(label, variant="primary", size="md", href=none, icon=none, icon_right=none, block=false, attrs="") -%}
+  {%- set tag = "a" if href else "button" -%}
+  <{{ tag }} class="cw-btn cw-btn--{{ variant }} cw-btn--{{ size }}{{ ' cw-btn--block' if block else '' }}"
+    {%- if href %} href="{{ href }}"{% endif %} {{ attrs|safe }}>
+    {%- if icon %}<span class="cw-btn__icon">{{ icon|safe }}</span>{% endif -%}
+    {{ label }}
+    {%- if icon_right %}<span class="cw-btn__icon">{{ icon_right|safe }}</span>{% endif -%}
+  </{{ tag }}>
+{%- endmacro %}
+
+{#- ---------- Badge ----------  React: <Badge variant solid dot> -#}
+{% macro badge(label, variant="neutral", solid=false, dot=false) -%}
+  <span class="cw-badge cw-badge--{{ variant }}{{ ' cw-badge--solid' if solid else '' }}">
+    {%- if dot %}<span class="cw-badge__dot"></span>{% endif -%}{{ label }}
+  </span>
+{%- endmacro %}
+
+{#- ---------- Kicker ----------  React: <Kicker tone rule index> -#}
+{% macro kicker(label, tone="accent", rule=true, index=none) -%}
+  {%- set tonecls = " cw-kicker-c--muted" if tone == "muted" else (" cw-kicker-c--gold" if tone == "gold" else "") -%}
+  <span class="cw-kicker-c{{ tonecls }}">
+    {%- if rule %}<span class="cw-kicker-c__rule"></span>{% endif -%}
+    {%- if index is not none %}<span class="cw-kicker-c__idx">{{ index }}</span>{% endif -%}
+    {{ label }}
+  </span>
+{%- endmacro %}
+
+{#- ---------- Stat ----------  React: <Stat value prefix suffix label tone> -#}
+{% macro stat(value, label=none, prefix=none, suffix=none, tone="default") -%}
+  {%- set tonecls = " cw-stat--accent" if tone == "accent" else (" cw-stat--gold" if tone == "gold" else "") -%}
+  <div class="cw-stat{{ tonecls }}">
+    <div class="cw-stat__value">
+      {%- if prefix %}<span class="cw-stat__affix">{{ prefix }}</span>{% endif -%}
+      <span>{{ value }}</span>
+      {%- if suffix %}<span class="cw-stat__affix">{{ suffix }}</span>{% endif -%}
+    </div>
+    {%- if label %}<div class="cw-stat__label">{{ label }}</div>{% endif -%}
+  </div>
+{%- endmacro %}
+
+{#- ---------- Card ----------  React: <Card elevation interactive ticked>
+    Use as a {% call %} block so children render inside:
+      {% call card(interactive=true) %}  ...content...  {% endcall %} -#}
+{% macro card(elevation="default", interactive=false, ticked=false, attrs="") -%}
+  {%- set elev = {"flat":"cw-card--flat","raised":"cw-card--raised","sunken":"cw-card--sunken"}.get(elevation, "") -%}
+  <div class="cw-card{{ ' ' ~ elev if elev else '' }}{{ ' cw-card--interactive' if interactive else '' }}{{ ' cw-card--ticked' if ticked else '' }}" {{ attrs|safe }}>
+    {{ caller() }}
+  </div>
+{%- endmacro %}
+
+{#- ---------- Monogram ----------  React: <Monogram variant="lockup|mark|wordmark" tone size>
+    Sizes mirror the React SIZES map. -#}
+{% macro monogram(variant="lockup", tone="navy", size="md", name="Chris Warrick", role="Technical Program Manager", initials="CTW") -%}
+  {%- set sizes = {"sm":{"box":28,"font":13,"name":15},"md":{"box":40,"font":19,"name":20},"lg":{"box":56,"font":27,"name":28},"xl":{"box":84,"font":41,"name":40}} -%}
+  {%- set s = sizes.get(size, sizes["md"]) -%}
+  {%- set long = (initials|length) >= 3 -%}
+  {%- set glyphfont = (s.font * 0.74)|round|int if long else s.font -%}
+  {%- set markcls = "" ~ (" cw-id__mark--ring" if tone == "ring" else "") ~ (" cw-id__mark--light" if tone == "light" else "") ~ (" cw-id__mark--gold" if tone == "gold" else "") -%}
+  <span class="cw-id">
+    {%- if variant != "wordmark" -%}
+      <span class="cw-id__mark{{ markcls }}" style="width:{{ s.box }}px;height:{{ s.box }}px;font-size:{{ glyphfont }}px" aria-hidden="true">
+        <span class="cw-id__glyph" style="letter-spacing:{{ '-0.05em' if long else '-0.04em' }}">{{ initials }}</span>
+      </span>
+    {%- endif -%}
+    {%- if variant != "mark" -%}
+      <span class="cw-id__text">
+        <span class="cw-id__name" style="font-size:{{ s.name }}px">{{ name }}</span>
+        {%- if role %}<span class="cw-id__role">{{ role }}</span>{% endif -%}
+      </span>
+    {%- endif -%}
+  </span>
+{%- endmacro %}
+
+{#- ---------- Avatar ----------  React: <Avatar src alt size shape ring status> -#}
+{% macro avatar(src=none, alt="", initials="CW", size="md", shape="circle", ring=false, status=false) -%}
+  {%- set px = {"sm":32,"md":44,"lg":64,"xl":96}.get(size, 44) -%}
+  <span class="cw-avatar{{ ' cw-avatar--square' if shape == 'square' else '' }}{{ ' cw-avatar--ring' if ring else '' }}"
+        style="width:{{ px }}px;height:{{ px }}px;font-size:{{ (px * 0.4)|round|int }}px">
+    {%- if src %}<img src="{{ src }}" alt="{{ alt }}">{% else %}<span aria-hidden="true">{{ initials }}</span>{% endif -%}
+    {%- if status %}<span class="cw-avatar__status"></span>{% endif -%}
+  </span>
+{%- endmacro %}
+
+{#- ---------- Icons ----------
+    Lucide-style, 24x24, 2px stroke. Mirrors templates/website/Icons.jsx.
+    Call: {{ icon("arrow-right", 18) }}  ->  inline <svg> string.
+    Add more by copying the path 'd' data from a Lucide icon. -#}
+{% macro icon(name, size=20) -%}
+  {%- set paths = {
+    "arrow-right":   ["M5 12h14","M13 6l6 6-6 6"],
+    "arrow-left":    ["M19 12H5","M11 18l-6-6 6-6"],
+    "arrow-up-right":["M7 17 17 7","M7 7h10v10"],
+    "mail":          ['RECT:3,5,18,14,2',"m3 7 9 6 9-6"],
+    "github":        ["M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"],
+    "linkedin":      ["M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z","RECT:2,9,4,12,0","CIRCLE:4,4,2"],
+    "sun":           ["CIRCLE:12,12,4","M12 2v2","M12 20v2","m4.9 4.9 1.4 1.4","m17.7 17.7 1.4 1.4","M2 12h2","M20 12h2","m6.3 17.7-1.4 1.4","m19.1 4.9-1.4 1.4"],
+    "moon":          ["M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"],
+    "map-pin":       ["M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z","CIRCLE:12,10,3"],
+    "file-text":     ["M14 3v4a1 1 0 0 0 1 1h4","M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z","M9 9h1","M9 13h6","M9 17h6"],
+    "terminal":      ["m4 17 6-6-6-6","M12 19h8"],
+    "users":         ["M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2","CIRCLE:9,7,4","M22 21v-2a4 4 0 0 0-3-3.9","M16 3.1a4 4 0 0 1 0 7.8"],
+    "git-branch":    ["LINE:6,3,6,15","CIRCLE:18,6,3","CIRCLE:6,18,3","M18 9a9 9 0 0 1-9 9"],
+    "gauge":         ["m12 14 4-4","M3.34 19a10 10 0 1 1 17.32 0"],
+    "anchor":        ["CIRCLE:12,5,3","LINE:12,22,12,8","M5 12H2a10 10 0 0 0 20 0h-3"],
+    "clock":         ["CIRCLE:12,12,9","M12 7v5l3 2"],
+    "plane":         ["M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a1 1 0 0 0-.9 1.7l5.6 3.3-2.1 2.1-2-.4a1 1 0 0 0-.9 1.6l1.7 1.7 1.7 1.7a1 1 0 0 0 1.6-.9l-.4-2 2.1-2.1 3.3 5.6a1 1 0 0 0 1.7-.9z"],
+    "award":         ["CIRCLE:12,8,6","M15.5 12.9 17 22l-5-3-5 3 1.5-9.1"]
+  } -%}
+  <svg viewBox="0 0 24 24" width="{{ size }}" height="{{ size }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none">
+    {%- for d in paths.get(name, []) -%}
+      {%- if d.startswith("CIRCLE:") -%}{% set c = d[7:].split(",") %}<circle cx="{{ c[0] }}" cy="{{ c[1] }}" r="{{ c[2] }}"></circle>
+      {%- elif d.startswith("RECT:") -%}{% set c = d[5:].split(",") %}<rect x="{{ c[0] }}" y="{{ c[1] }}" width="{{ c[2] }}" height="{{ c[3] }}" rx="{{ c[4] }}"></rect>
+      {%- elif d.startswith("LINE:") -%}{% set c = d[5:].split(",") %}<line x1="{{ c[0] }}" y1="{{ c[1] }}" x2="{{ c[2] }}" y2="{{ c[3] }}"></line>
+      {%- else -%}<path d="{{ d }}"></path>
+      {%- endif -%}
+    {%- endfor -%}
+  </svg>
+{%- endmacro %}
