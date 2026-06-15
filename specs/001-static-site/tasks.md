@@ -86,7 +86,7 @@ deploys with no manual server step.
 
 - [ ] T012 [P] [US2] `tests/test_freeze.py`: after freeze, `build/` contains `index.html`, `work/`, `building/`, `about/`, `writing/`, `service/`, and `404.html`
 - [ ] T013 [P] [US2] `tests/test_links.py`: every internal `href`/`src` in `build/**/*.html` resolves to an emitted file (pretty URL → `index.html`); build fails otherwise (FR-015/SC-010)
-- [ ] T014 [P] [US2] `tests/test_attack_surface.py`: no external-origin `<script src>`/`<link href>`/`<img src>`/CSS `@import`/`url(...)`; no `<form>`; the only `<script>` is the inline theme/mobile-nav toggle (FR-016/017/018, SC-002)
+- [ ] T014 [P] [US2] `tests/test_attack_surface.py`: no external-origin `<script src>`/`<link href>`/`<img src>`/CSS `@import`/`url(...)`; no `<form>`; the **only** `<script>`s are the inline theme toggle and the optional inline mobile-nav toggle (FR-016/017/018, SC-002). Also assert the theme-init script is **inline in `<head>`** (so it runs before first paint, no FOUC) and references `prefers-color-scheme` as the no-stored-choice fallback (FR-006/SC-008)
 - [ ] T015 [P] [US2] `tests/test_routes_core.py`: unknown URL and unknown `post_id` return 404; 404 response uses the styled template (FR-004)
 
 ### Implementation for User Story 2
@@ -96,7 +96,7 @@ deploys with no manual server step.
 - [ ] T018 [US2] Create `staticwebapp.config.json`: `responseOverrides."404".rewrite="/404.html"`, woff2/json MIME, and `www`→apex 301 redirect (per static-hosting contract)
 - [ ] T019 [P] [US2] Create `infra/main.bicep` + `infra/main.bicepparam` provisioning an Azure Static Web App (Free SKU) into a **new** resource group (name + region in the param file)
 - [ ] T020 [P] [US2] Create `scripts/validate-infra.sh` running `az bicep build-params --file infra/main.bicepparam`; run it and confirm it compiles
-- [ ] T021 [US2] Create `.github/workflows/deploy.yml`: on push to `main`, `uv sync` → `uv run pytest` → `uv run python freeze.py` → `Azure/static-web-apps-deploy` (deploy token from runner secret store only; `skip_app_build: true`, output = `build/`)
+- [ ] T021 [US2] Create `.github/workflows/deploy.yml`: on push to `main`, `uv sync` → `uv run pytest` → **secret-scan gate** (`git ls-files`-scoped grep for committed deploy-token / publish-profile / subscription·tenant-id patterns; **fail the job** if any match, SC-009/FR-022) → `uv run python freeze.py` → `Azure/static-web-apps-deploy` (deploy token from runner secret store only; `skip_app_build: true`, output = `build/`)
 
 **Checkpoint**: Site freezes clean, passes all invariant gates, and is deploy-ready.
 
@@ -113,15 +113,15 @@ on `/writing` (most-recent-first) and renders at `/writing/<slug>` with back lin
 ### Tests for User Story 3 (TDD — write first, must FAIL)
 
 - [ ] T022 [P] [US3] `tests/test_posts.py`: `load_posts()` derives `id` from filename, requires title/date/tag/excerpt (missing → error), orders most-recent-first by ISO `date`, renders `body_html` with fenced-code Pygments highlighting, handles `featured` and empty `posts/`
-- [ ] T023 [P] [US3] `tests/test_routes_writing.py`: `/writing` lists posts in order; `/writing/<slug>` renders the body + back link; unknown slug → 404
+- [ ] T023 [P] [US3] `tests/test_routes_writing.py`: `/writing` lists posts in order; `/writing/<slug>` renders the body + back link **and sets `active="writing"`** (the article page marks Writing active, FR-002); unknown slug → 404
 
 ### Implementation for User Story 3
 
 - [ ] T024 [US3] Implement `posts.py:load_posts()` using `python-frontmatter` + Python-Markdown (`fenced_code`, `codehilite`, `tables`, `attr_list`) — green for T022
 - [ ] T025 [US3] Wire `app.py` `writing`/`article` routes to `posts.load_posts()` and **remove** the inline `POSTS` dict from `content.py`
 - [ ] T026 [P] [US3] Generate self-hosted `static/css/pygments.css` (`pygments -S <style> -f html`) and link it from the article template/`base.html`
-- [ ] T027 [P] [US3] Create seed `posts/*.md` from existing `content.py` POSTS metadata; migrate post `p1` body **verbatim** from `_design_reference/Article.jsx`; give p2–p4 a clearly-marked `TODO` placeholder body (Principle V — never fabricate)
-- [ ] T028 [P] [US3] Translate `templates/writing.html` from `_design_reference/Writing.jsx` (featured block + post list)
+- [ ] T027 [P] [US3] Create seed `posts/*.md` from existing `content.py` POSTS metadata; migrate post `p1` body **verbatim** from `_design_reference/Article.jsx`; give p2–p4 a clearly-marked `TODO` placeholder body (Principle V — never fabricate). Any post images are **self-hosted** under `static/img/` and referenced by root-relative path (no remote images — FR-011/FR-017)
+- [ ] T028 [P] [US3] Translate `templates/writing.html` from `_design_reference/Writing.jsx` (featured block + post list); render a clean **empty state** when no posts exist rather than breaking (Edge Cases — empty writing index)
 - [ ] T029 [P] [US3] Translate `templates/article.html` from `_design_reference/Article.jsx` (renders `post.body_html`, meta, back link)
 
 **Checkpoint**: Blog works locally and freezes into static article pages.
@@ -171,7 +171,7 @@ open a `mailto:` draft to `site.email`; no form submits data.
 - [ ] T034 [P] Accessibility pass across all pages: headshot/img alt text (decorative marked), heading order, AA contrast in both themes, keyboard operability of nav + theme toggle (FR-020, SC-007)
 - [ ] T035 [P] Per-page static SEO/meta: title, description, and self-contained social-preview (OG) tags with a self-hosted image — no external/analytics (Assumptions)
 - [ ] T036 [P] Rewrite root `README.md`: run/freeze/deploy commands and the static-pipeline overview
-- [ ] T037 Run full `quickstart.md` validation: `uv run pytest` green, `uv run python freeze.py` clean, `scripts/validate-infra.sh` passes, attack-surface spot check shows zero third-party requests
+- [ ] T037 Run full `quickstart.md` validation: `uv run pytest` green, `uv run python freeze.py` clean, `scripts/validate-infra.sh` passes, attack-surface spot check shows zero third-party requests, **tracked-files secret scan is clean** (no committed token/credential, SC-009/FR-022), and a **theme-toggle browser check**: choice persists across pages + reloads with no flash of the wrong theme, and with JS disabled the theme falls back to the OS `prefers-color-scheme` (FR-006/SC-008)
 
 ---
 
@@ -234,6 +234,7 @@ the reviewer re-runs `pytest` + `freeze` (+ `validate-infra` for infra) per gate
 ## Notes
 
 - [P] = different files, no incomplete-task dependency.
+- `tests/test_routes_core.py` is **appended** across phases (T007 US1, T015 US2, T030 US4). Their `[P]` markers are parallel *within their own phase*; the phases run sequentially, so the appends never collide.
 - Translation tasks have no unit tests by design (Principle VI) — verified by the
   freeze building, exact class names, and review.
 - No task is "done" until `uv run pytest` is green and (when templates/routes/
