@@ -1,0 +1,96 @@
+<!-- 404 page for the Personal Website template. Goofy-but-on-brand: bolter / wave-off, SQL gag, Monte Carlo cycler. Reuses the site chrome. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>404 — Foul Deck · Chris Warrick</title>
+<script src="./ds-base.js"></script>
+<link rel="stylesheet" href="site.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  /* ---------- 404-specific layout (composes brand tokens) ---------- */
+  .nf { display: flex; align-items: center; min-height: calc(100vh - 68px); }
+  .nf__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; width: 100%; }
+
+  .nf__digits { display: flex; align-items: center; gap: clamp(4px, 1.5vw, 14px); margin: 14px 0 6px; line-height: 1; }
+  .nf__digits > span { font-family: var(--font-display); font-weight: 700; font-size: clamp(5rem, 16vw, 11rem);
+    letter-spacing: -0.04em; color: var(--text); }
+  .nf__o { display: inline-grid; place-items: center; color: var(--gold-700); transform: translateY(2px); }
+  .nf__o svg { width: clamp(4rem, 13vw, 9rem); height: clamp(4rem, 13vw, 9rem); stroke-width: 1.75; }
+
+  .nf__h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.5vw, 3.25rem);
+    letter-spacing: -0.03em; line-height: 1.02; margin: 6px 0 0; }
+
+  /* Diagnostic readout card */
+  .nf__diag { margin-top: 26px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); max-width: 52ch; }
+  .nf__diag-head { display: flex; align-items: center; gap: 12px; }
+  .nf__diag-meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); letter-spacing: .02em; }
+  .nf__diag-text { font-size: var(--text-sm); line-height: 1.55; color: var(--text); margin: 12px 0 2px; min-height: 2.5em; }
+
+  .nf__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+  /* Terminal gag */
+  .nf__right { justify-self: center; width: 100%; max-width: 460px; }
+  .term404 { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg); background: var(--navy-950); }
+  .term404__bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px;
+    background: var(--navy-900); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .term404__dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.18); }
+  .term404__dot:nth-child(1) { background: #E5654B; }
+  .term404__dot:nth-child(2) { background: var(--gold-500); }
+  .term404__dot:nth-child(3) { background: var(--success-500); }
+  .term404__title { margin-left: 8px; font-family: var(--font-mono); font-size: 12px; color: #8aa3c2; letter-spacing: .02em; }
+  .term404__body { padding: 22px 20px 26px; font-family: var(--font-mono); font-size: 14px; line-height: 1.9; color: #cfe0f2; }
+  .term404__body p { margin: 0; }
+  .term404__prompt { color: var(--teal-500, #16A5B0); }
+  .term404__indent { padding-left: 2.6em; }
+  .term404__str { color: var(--gold-500); }
+  .term404__out { color: #f0b9ac; margin-top: 6px !important; }
+  .term404__cursor { margin-top: 10px !important; }
+  .term404__blink { display: inline-block; color: #cfe0f2; animation: nf-blink 1.05s steps(1) infinite; }
+  @keyframes nf-blink { 50% { opacity: 0; } }
+
+  .nf__caption { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);
+    text-align: center; margin: 16px 0 0; letter-spacing: .01em; }
+
+  @media (max-width: 860px) {
+    .nf { min-height: 0; padding: clamp(2.5rem, 8vw, 5rem) 0; }
+    .nf__grid { grid-template-columns: 1fr; }
+    .nf__right { order: -1; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="Icons.jsx"></script>
+<script type="text/babel" src="Data.jsx"></script>
+<script type="text/babel" src="Chrome.jsx"></script>
+<script type="text/babel" src="NotFound.jsx"></script>
+<script type="text/babel">
+  /* Standalone 404 shell — reuses the real Header/Footer. All nav returns to the site. */
+  function NotFoundPage() {
+    const [theme, setTheme] = React.useState(() => localStorage.getItem('cw-theme') || 'light');
+    React.useEffect(() => {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('cw-theme', theme);
+    }, [theme]);
+
+    const goHome = () => { window.location.href = 'index.html'; };
+
+    return (
+      <div className="site">
+        <window.Header view="" onNav={goHome} theme={theme} onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
+        <window.NotFound onHome={goHome} />
+        <window.Footer onNav={goHome} />
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<NotFoundPage />);
+</script>
+</body>
+</html>
