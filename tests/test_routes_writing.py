@@ -30,7 +30,7 @@ def _active_nav_id(html: str) -> str | None:
 
 
 def test_writing_index_lists_posts_most_recent_first(client: FlaskClient) -> None:
-    """`/writing` returns 200 and lists post titles in most-recent-first order."""
+    """`/writing` returns 200 and lists post titles most-recent-first."""
     from posts import load_posts
 
     resp = client.get("/writing")

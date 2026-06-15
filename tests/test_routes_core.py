@@ -42,7 +42,7 @@ def test_home_returns_200_and_marks_home_active(client: FlaskClient) -> None:
 
 
 def test_home_includes_stats_and_work_preview(client: FlaskClient) -> None:
-    """`/` renders a STATS value and a WORK_CIVILIAN org (recent-work preview)."""
+    """`/` renders a STATS value and a WORK_CIVILIAN org (recent work)."""
     resp = client.get("/")
     assert resp.status_code == 200
     assert "330" in resp.text
@@ -90,7 +90,7 @@ def test_about_includes_skills_and_certs(client: FlaskClient) -> None:
 
 
 def test_unknown_url_returns_styled_404(client: FlaskClient) -> None:
-    """An unknown URL returns 404 using the styled site template, not Flask's default."""
+    """An unknown URL returns the styled 404 page, not Flask's default."""
     resp = client.get("/this-route-does-not-exist")
     assert resp.status_code == 404
     assert "404 Not Found" not in resp.text  # Flask's default werkzeug title
@@ -113,7 +113,7 @@ def test_unknown_post_id_returns_styled_404(client: FlaskClient) -> None:
 
 
 def test_service_returns_200_and_marks_work_active(client: FlaskClient) -> None:
-    """`/service` returns 200 and marks the Work nav item active (active_for)."""
+    """`/service` returns 200 and marks Work nav active (active_for)."""
     resp = client.get("/service")
     assert resp.status_code == 200
     assert _active_nav_id(resp.text) == "work"

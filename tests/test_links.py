@@ -44,7 +44,7 @@ def _resolve(build: Path, href: str) -> Path:
 
 
 def test_internal_links_resolve_to_emitted_files(build: Path) -> None:
-    """Every internal href/src across the frozen site resolves to a real file."""
+    """Every internal href/src in the frozen site resolves to a real file."""
     html_files = sorted(build.rglob("*.html"))
     assert html_files, "expected at least one frozen HTML file"
 

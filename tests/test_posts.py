@@ -1,8 +1,9 @@
 """T022 [US3]: tests for `posts.load_posts()`.
 
-Targets the loader contract in `specs/001-static-site/contracts/post-frontmatter.md`
-and `data-model.md`: `load_posts(posts_dir=...)` returns posts ordered
-most-recent-first by ISO `date`, derives `id` from the filename stem, renders
+Targets the loader contract in
+`specs/001-static-site/contracts/post-frontmatter.md` and `data-model.md`:
+`load_posts(posts_dir=...)` returns posts ordered most-recent-first by ISO
+`date`, derives `id` from the filename stem, renders
 `body_html` with Pygments-highlighted fenced code, requires
 title/date/tag/excerpt (raising on a missing key), respects `featured`
 (default False), and returns `[]` for an empty/absent directory.
@@ -23,7 +24,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def test_load_posts_returns_list_of_dicts() -> None:
-    """`load_posts()` over a directory of valid posts returns a list of dicts."""
+    """`load_posts()` on a directory of valid posts returns a list of dicts."""
     from posts import load_posts
 
     result = load_posts(posts_dir=str(FIXTURES / "posts_valid"))
@@ -71,7 +72,7 @@ def test_load_posts_renders_body_html_with_pygments_highlighting() -> None:
 
 
 def test_load_posts_respects_featured_flag_and_defaults_false() -> None:
-    """`featured` is True for the featured fixture and defaults to False otherwise."""
+    """`featured` is True for the featured fixture, False by default."""
     from posts import load_posts
 
     result = load_posts(posts_dir=str(FIXTURES / "posts_valid"))

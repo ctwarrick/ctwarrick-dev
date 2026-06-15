@@ -45,7 +45,7 @@ class PrettyURLFreezer(Freezer):
     """
 
     def urlpath_to_filepath(self, path: str) -> str:
-        """Map `/work` -> `work/index.html`; pass through `/`, `/x.ext`, `/x/`."""
+        """Map `/work` -> `work/index.html`; pass `/`, `*.ext`, `*/` through."""
         if not path.endswith("/") and not os.path.splitext(path)[1]:
             path += "/index.html"
         return super().urlpath_to_filepath(path)

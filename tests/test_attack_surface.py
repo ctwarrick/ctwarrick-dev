@@ -27,7 +27,7 @@ def _frozen_html_files(build: Path) -> list[Path]:
 
 
 def test_no_external_script_link_or_img_sources(build: Path) -> None:
-    """No <script src>, <link href>, or <img src> points at an external origin."""
+    """No <script src>, <link href>, or <img src> from an external origin."""
     offenders: list[str] = []
     for html_file in _frozen_html_files(build):
         soup = BeautifulSoup(html_file.read_text(encoding="utf-8"), "html.parser")

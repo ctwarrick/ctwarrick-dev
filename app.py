@@ -1,14 +1,20 @@
-"""
-app.py — Flask entry point for the Chris Warrick site.
+"""Flask application for the Chris Warrick personal site.
 
-Run locally:   flask --app app run --debug
-Azure (gunicorn startup command):   gunicorn --bind=0.0.0.0 --timeout 600 app:app
+Declares one route per page plus `/writing/<post_id>` for individual blog
+posts. Structured page content comes from `content`; blog posts are loaded
+from Markdown by `posts`. The app is authored for developer ergonomics and
+frozen to static HTML by `freeze` for deployment to Azure Static Web Apps,
+so production runs no Python.
 
-This is a skeleton. The `work` route + work.html are fully worked
-examples; the other routes render templates you still need to build by
-translating the matching JSX in _design_reference/ (see README, "Routes").
+Run the authoring server locally:
+    uv run flask --app app run --debug
 """
-from flask import Flask, render_template, abort, url_for
+
+from __future__ import annotations
+
+from flask import Flask, abort, render_template
+from werkzeug.exceptions import HTTPException
+
 import content
 import posts
 
@@ -16,57 +22,89 @@ app = Flask(__name__)
 
 
 @app.context_processor
-def inject_globals():
-    """Make nav + site info available to every template (header/footer)."""
+def inject_globals() -> dict[str, object]:
+    """Expose nav and site info to every template (header and footer).
+
+    Returns:
+        A mapping with `nav` (the primary nav items) and `site` (site
+        metadata) made available to all rendered templates.
+    """
     return {"nav": content.NAV, "site": content.SITE}
 
 
-# Which nav item highlights for a given view. Mirrors the React active-state
-# logic: the Service and Article pages light up their parent nav item.
+# Which nav item highlights for a given view. Mirrors the React
+# active-state logic: the Service and Article pages light up their
+# parent nav item.
 ACTIVE = {"service": "work", "article": "writing"}
 
 
-def active_for(view):
+def active_for(view: str) -> str:
+    """Return the nav item that should be highlighted for a view.
+
+    Args:
+        view: the current view/endpoint name.
+
+    Returns:
+        The nav id to highlight: `view` itself, unless it maps to a
+        parent (Service highlights Work, Article highlights Writing).
+    """
     return ACTIVE.get(view, view)
 
 
 @app.route("/")
-def home():
+def home() -> str:
+    """Render the home page with summary stats and recent work."""
     return render_template(
-        "home.html", active="home",
-        stats=content.STATS, work=content.WORK_CIVILIAN[:2],
+        "home.html",
+        active="home",
+        stats=content.STATS,
+        work=content.WORK_CIVILIAN[:2],
     )
 
 
 @app.route("/work")
-def work():
-    return render_template(
-        "work.html", active="work", work=content.WORK_CIVILIAN,
-    )
+def work() -> str:
+    """Render the work page with the civilian delivery timeline."""
+    return render_template("work.html", active="work", work=content.WORK_CIVILIAN)
 
 
 @app.route("/building")
-def building():
-    return render_template(
-        "building.html", active="building", projects=content.PROJECTS,
-    )
+def building() -> str:
+    """Render the building page listing independent projects."""
+    return render_template("building.html", active="building", projects=content.PROJECTS)
 
 
 @app.route("/about")
-def about():
+def about() -> str:
+    """Render the about page with skills and certifications."""
     return render_template(
-        "about.html", active="about",
-        skills=content.SKILLS, certs=content.CERTS,
+        "about.html",
+        active="about",
+        skills=content.SKILLS,
+        certs=content.CERTS,
     )
 
 
 @app.route("/writing")
-def writing():
+def writing() -> str:
+    """Render the writing index (blog posts, most recent first)."""
     return render_template("writing.html", active="writing", posts=posts.load_posts())
 
 
 @app.route("/writing/<post_id>")
-def article(post_id):
+def article(post_id: str) -> str:
+    """Render a single blog post, or 404 if no post has that id.
+
+    Args:
+        post_id: the post identifier (the Markdown filename stem).
+
+    Returns:
+        The rendered article page.
+
+    Raises:
+        werkzeug.exceptions.NotFound: aborted with 404 when no post
+            matches `post_id`.
+    """
     post = next((p for p in posts.load_posts() if p["id"] == post_id), None)
     if post is None:
         abort(404)
@@ -74,14 +112,26 @@ def article(post_id):
 
 
 @app.route("/service")
-def service():
+def service() -> str:
+    """Render the naval service page (linked from work, not in nav)."""
     return render_template(
-        "service.html", active=active_for("service"), service=content.SERVICE,
+        "service.html",
+        active=active_for("service"),
+        service=content.SERVICE,
     )
 
 
 @app.errorhandler(404)
-def not_found(error):
+def not_found(error: HTTPException) -> tuple[str, int]:
+    """Render the styled 404 page with a 404 status code.
+
+    Args:
+        error: the raised HTTP exception (unused; required by Flask's
+            error-handler signature).
+
+    Returns:
+        The rendered 404 template paired with the 404 status code.
+    """
     return render_template("404.html", active=None), 404
 
 
