@@ -22,7 +22,7 @@
       <div>
         {{ kicker("Service Record", index="06", tone="gold") }}
         <h1>A career in Naval Aviation, active and reserve.</h1>
-        <p>{{ service.intro }}</p>
+        <p>{{ service.intro|safe }}</p>
       </div>
     </div>
     <div class="svstats">
@@ -44,16 +44,16 @@
           <div class="work__head">
             <h2 class="work__role svrole"><span class="svrole__icon">{{ icon(r.icon, 18) }}</span>{{ r.role }}</h2>
           </div>
-          <p class="work__sum">{{ r.summary }}</p>
+          <p class="work__sum">{{ r.summary|safe }}</p>
           <ul class="work__out">
-            {% for o in r.outcomes %}<li>{{ o }}</li>{% endfor %}
+            {% for o in r.outcomes %}<li>{{ o|safe }}</li>{% endfor %}
           </ul>
         </div>
       </div>
       {% endfor %}
     </div>
     <p class="svnote">
-      Proud of it all . . . it's just not the headline. <br />
+      Proud of it all . . . it's just not my headline anymore. <br />
       <a class="inlinelink" href="{{ url_for('work') }}">Back to what I do now →</a>
     </p>
   </div>

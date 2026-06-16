@@ -244,21 +244,20 @@ PROJECTS = [
         ("blurb"): (
             "One night, Chef broke.  It started spewing old versions of my team's code across "
             "random production servers around the globe, bringing freight to a grinding halt.  I "
-            "was on call, and it was awful, because the only way to find the state of a given "
+            "was on call, and it was awful.  Because the only way to find the state of a given "
             "server was to go to a very specific URL for that particular server to show its "
             "status.  There were 150+ servers.  The next morning, after the smoke had cleared, "
             "I started writing a Flask dashboard that queried those individual URLs "
             "automatically, aggregating status across all 150+ production and pre-production "
             "servers into one view with near-real-time visibility, so on-call engineers could "
-            "stop hunting page-by-page in the dark, and get instant situational awareness at "
-            "3 AM."
+            "stop hunting page-by-page in the dark and get instant situational awareness."
         ),
     },
     {
         "id": "pr4",
         "name": "Mapping Progress Dashboard",
         "stack": "Flask · Azure Container Apps",
-        "icon": "map",
+        "icon": "compass",
         "link": "Internal · Expeditors",
         ("blurb"): (
             "My team was responsible for mapping hundreds of data fields from legacy COBOL and "
@@ -282,7 +281,7 @@ PROJECTS = [
         "icon": "cloud",
         "link": "Internal · Expeditors",
         ("blurb"): (
-            "Related to two other efforts, but worth calling out on its own.  MY Statistical "
+            "Related to two other efforts, but worth calling out on its own.  My Statistical "
             "Delivery Forecasting tool and the Mapping Progress Dashboard initially lived on "
             "small on-prem Linux VMs.  As I got ready to give my exp.oCon presentation, I was "
             "worried about the ability of a small VM to absorb 200+ attendees all trying to hit "
@@ -381,24 +380,25 @@ SERVICE = {
             "org": "Navy Reserve US Indo-Pacific Command J5 Kitsap",
             ("summary"): (
                 "Served as Training Officer and then Executive Officer of a detachment of Navy "
-                "Reservists based at Naval Reserve Center (NRC) Kitsap, who supported the "
+                "Reservists based at Navy Reserve Center (NRC) Kitsap, who supported the "
                 "headquarters staff of U.S. Indo-Pacific Command (USINDOPACOM).  INDOPACOM is a "
                 "four-star theater headquarters responsible for planning and directing the "
                 "activities of American forces across 52 percent of the Earth's surface, an area "
-                "home to more than 50 percent of the world's population.  Its commander is a skip-"
-                "level report of the President of the United States."
+                "home to more than 50 percent of the world's population.  Per the Goldwater-"
+                "Nichols Act of 1986, its commander is a skip-level report of the President "
+                "of the United States."
             ),
             "outcomes": [
                 "Directly supervised four Navy officers who were line managers of a team of "
                 "Navy reservists assigned to support INDOPACOM's Strategic Planning and Policy "
                 "Directorate (J5).",
                 "Served as a Joint Operations Center Watch Officer during the command post "
-                "exercise PACIFIC SENTRY 21, giving daily briefings to the four-star commander "
+                "exercise Pacific Sentry 21, giving daily briefings to the four-star commander "
                 "about the status of the J5 Directorate in concert with a one-star Air Force "
                 "Brigadier General.",
                 "Served as a Plans Officer for the J56 Strategy and Policy Division, supporting "
-                "the USINDOPACOM Theater Posture Plan, and serving as a primary point of contact "
-                "for the division during exercise PACIFIC SENTRY 23.",
+                "the USINDOPACOM Theater Posture Plan and serving as a primary point of contact "
+                "for the division during exercise Pacific Sentry 23.",
                 "Provided quarterly weekend augmentation support to various staff divisions of "
                 "the J5 directorate, supporting various projects and programs.",
             ],
@@ -411,7 +411,7 @@ SERVICE = {
             "org": 'Navy Reserve Tactical Air Control Squadron TWELVE (VTC-12) "Talons"',
             ("summary"): (
                 "Served as Operations Officer and Administration Officer for the reserve element "
-                "of TACRON TWELVE, an air operations unit which provides detachments of aviation "
+                "of VTC-12, an air operations unit which provides detachments of aviation "
                 "officers, enlisted Air Traffic Controllers, and enlisted Operations Specialists "
                 "to embark on Navy amphibious ships.  There, they coordinate and control flight "
                 "operations for Navy and Marine aircraft within their assigned airspace, also "
@@ -424,8 +424,8 @@ SERVICE = {
                 ),
                 (
                     "Served in the field with the Australian Defence Force as an Air "
-                    "Operations Officer during the joint US/Australian exercise TALISMAN "
-                    'SABER 17. "Out bush," as the Aussies say, in the Shoalwater Bay Training'
+                    "Operations Officer during the joint US/Australian exercise Talisman "
+                    'Saber 17. "Out bush," as the Aussies say, in the Shoalwater Bay Training '
                     'Area in north Queensland.'
                 ),
                 (
@@ -437,13 +437,13 @@ SERVICE = {
                 ),
                 (
                     "Served as a member of the Naval Amphibious Liaison Element (NALE) during the "
-                    "joint US/Australian exercise TALISMAN SABRE 19, serving this time at the main "
+                    "joint US/Australian exercise Talisman Sabre 19, serving this time at the main "
                     "military command center for the Australian Defence Force outside Canberra."
                 ),
                 (
                     "Supported the pre-deployment training of a detachment of active duty officers "
                     "and enlisted Air Traffic Controllers and Operations Specialists so they could "
-                    "deploy on board USS AMERICA (LHD 7)."
+                    "deploy on board the amphibious assault ship USS <em>Bonhomme Richard</em>."
                 ),
                 ("Selected for promotion to the rank of Commander."),
             ],
@@ -489,9 +489,9 @@ SERVICE = {
                     "mobilization billets on the books of units elsewhere."
                 ),
                 (
-                    'Was cross-assigned myself to the "Talons" of Navy Reserve TACRON TWELVE, '
+                    'Was cross-assigned myself to the Navy Reserve element of the VTC-12 "Talons,"'
                     "beginning what would become a roughly 6 1/2-year affiliation with this "
-                    "reserve unit. "
+                    "reserve unit."
                 ),
                 (
                     "Due to personnel shifts, when I became the second-most-senior officer in the "
@@ -501,8 +501,8 @@ SERVICE = {
                 ),
                 (
                     "Served on an Operational Planning Team on the headquarters staff of "
-                    "Commander, U.S. Third Fleet during the joint US/Australian exercise TALISMAN "
-                    "SABRE 15."
+                    "Commander, U.S. Third Fleet during the joint US/Australian exercise Talisman "
+                    "Sabre 15."
                 ),
                 ("Selected for promotion to the rank of Lieutenant Commander."),
             ],
@@ -523,23 +523,23 @@ SERVICE = {
                 (
                     "Served as squadron aircrew in a Navy Electronic Attack squadron as it "
                     "transitioned from a land-based unit supporting US Air Force operations to a "
-                    "carrier-based unit deploying on board USS NIMITZ (CVN 68) as part of Carrier "
-                    "Air Wing ELEVEN (CVW 11)."
+                    "carrier-based unit deploying on board the nuclear-powered aircraft carrier "
+                    "USS <em>Nimitz</em> as part of Carrier Air Wing Eleven."
                 ),
                 (
                     "Supported multiple large force exercises hosted by the US Air Force at Nellis "
                     "Air Force Base, Nevada, as well as participating in the pre-deployment workup "
-                    "cycle for CVW-11, both on board USS NIMITZ and at Naval Air Station Fallon, "
-                    "Nevada."
+                    "cycle for CVW-11, both on board USS <em>Nimitz</em> and at Naval Air Station "
+                    "Fallon, Nevada."
                 ),
                 (
-                    "Flew off NIMITZ during pre-deployment workups in support of the major "
-                    "international exercise Rim of the Pacific (RIMPAC) 18."
+                    "Flew off USS <em>Nimitz</em> during pre-deployment workups in support of the "
+                    "major international exercise Rim of the Pacific (RIMPAC) 18."
                 ),
                 (
-                    "Deployed on board NIMITZ in 2013, supporting both Operation ENDURING FREEDOM "
-                    "in Afghanistan and operations in the aftermath of the 2013 Syrian chemical "
-                    "weapons crisis."
+                    "Deployed on board USS <em>Nimitz</em> in 2013, supporting both Operation "
+                    "Enduring Freedom in Afghanistan and operations in the aftermath of the 2013 "
+                    "Syrian chemical weapons crisis."
                 ),
             ],
         },

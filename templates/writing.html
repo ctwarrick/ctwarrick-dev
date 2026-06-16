@@ -38,7 +38,7 @@
         <div style="display:flex;align-items:center;gap:14px">
           {{ button("Read it", variant="gold", size="sm", icon_right=icon("arrow-right", 16)) }}
           <span style="font-family:var(--font-mono);font-size:12px;color:#a9c0db">
-            {{ featured.date_display }}{% if featured.read %} · {{ featured.read }}{% endif %}
+            {{ featured.date_display }}
           </span>
         </div>
       </a>
@@ -50,7 +50,6 @@
             <div class="post__meta">
               {{ badge(p.tag, variant="teal") }}
               <span>{{ p.date_display }}</span>
-              {% if p.read %}<span>·</span><span>{{ p.read }}</span>{% endif %}
             </div>
             <h2 class="post__title">{{ p.title }}</h2>
             <p class="post__excerpt">{{ p.excerpt }}</p>
