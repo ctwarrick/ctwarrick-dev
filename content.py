@@ -219,7 +219,7 @@ PROJECTS = [
         "link": "Internal · Expeditors",
         ("blurb"): (
             "Inspired by Dan Vacanti's work in his <em>Actionable Agile Metrics</em> series and "
-            "<em>When Will It Be Done?<em>, I set out to implement these concepts in a web app "
+            "<em>When Will It Be Done?</em>, I set out to implement these concepts in a web app "
             "teams could use in their day-to-day syncs.  By the end, it offered four different "
             "types of flow visualizations, all drawn from live Azure DevOps data:  <ul><li>The "
             "classic Cycle Time Scatterplot of all work done in a given timeframe, along with "

@@ -28,7 +28,7 @@
           <span class="proj__stack">{{ p.stack }}</span>
         </div>
         <h2 class="proj__name">{{ p.name }}</h2>
-        <p class="proj__blurb">{{ p.blurb|safe }}</p>
+        <div class="proj__blurb">{{ p.blurb|safe }}</div>
         <div class="proj__link">{{ icon("git-branch", 14) }} {{ p.link }}</div>
       </div>
       {% endfor %}
