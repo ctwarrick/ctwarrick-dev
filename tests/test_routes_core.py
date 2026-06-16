@@ -42,11 +42,11 @@ def test_home_returns_200_and_marks_home_active(client: FlaskClient) -> None:
 
 
 def test_home_includes_stats_and_work_preview(client: FlaskClient) -> None:
-    """`/` renders a STATS value and a WORK_CIVILIAN org (recent work)."""
+    """`/` renders a STATS value and a WORK org (recent work)."""
     resp = client.get("/")
     assert resp.status_code == 200
     assert "330" in resp.text
-    assert content.WORK_CIVILIAN[0]["org"] in resp.text
+    assert content.WORK[0]["org"] in resp.text
 
 
 def test_work_returns_200_and_marks_work_active(client: FlaskClient) -> None:
@@ -57,9 +57,9 @@ def test_work_returns_200_and_marks_work_active(client: FlaskClient) -> None:
 
 
 def test_work_includes_work_org(client: FlaskClient) -> None:
-    """`/work` renders the civilian work history (an org from WORK_CIVILIAN)."""
+    """`/work` renders the work history (an org from WORK)."""
     resp = client.get("/work")
-    assert content.WORK_CIVILIAN[0]["org"] in resp.text
+    assert content.WORK[0]["org"] in resp.text
 
 
 def test_building_returns_200_and_marks_building_active(client: FlaskClient) -> None:

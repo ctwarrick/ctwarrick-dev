@@ -58,14 +58,14 @@ def home() -> str:
         "home.html",
         active="home",
         stats=content.STATS,
-        work=content.WORK_CIVILIAN[:2],
+        work=content.WORK[:2],
     )
 
 
 @app.route("/work")
 def work() -> str:
     """Render the work page with the civilian delivery timeline."""
-    return render_template("work.html", active="work", work=content.WORK_CIVILIAN)
+    return render_template("work.html", active="work", work=content.WORK)
 
 
 @app.route("/building")

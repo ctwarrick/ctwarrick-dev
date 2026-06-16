@@ -67,8 +67,6 @@ SKILLS = [
 
 CERTS = ["ICAgile ICP-ACC", "ICAgile ICP-ATF", "Certified Scrum Master (CSM)"]
 
-# Full experience. `service: True` marks military entries — the Work page
-# filters these OUT of the civilian timeline and links to the Service page.
 WORK = [
     {
         "id": "w0",
@@ -194,9 +192,6 @@ WORK = [
         ],
     },
 ]
-
-# Convenience view: the civilian timeline the Work page renders.
-WORK_CIVILIAN = [w for w in WORK if not w.get("service")]
 
 PROJECTS = [
     {
