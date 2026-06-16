@@ -7,7 +7,7 @@
    marks the Work nav item active.
    ========================================================================= -#}
 {% extends "base.html" %}
-{% from "_macros.html" import kicker, icon %}
+{% from "_macros.html" import kicker, badge, icon %}
 
 {% block title %}Service Record — {{ site.name }}{% endblock %}
 {% block meta_description %}{{ service.intro }}{% endblock %}
@@ -43,6 +43,7 @@
         <div>
           <div class="work__head">
             <h2 class="work__role svrole"><span class="svrole__icon">{{ icon(r.icon, 18) }}</span>{{ r.role }}</h2>
+            {{ badge(r.tag, variant="gold") }}
           </div>
           <p class="work__sum">{{ r.summary|safe }}</p>
           <ul class="work__out">

@@ -378,6 +378,7 @@ SERVICE = {
             "icon": "globe",
             "role": "Department Head/Executive Officer",
             "org": "Navy Reserve US Indo-Pacific Command J5 Kitsap",
+            "tag": "Plans and Policy",
             ("summary"): (
                 "Served as Training Officer and then Executive Officer of a detachment of Navy "
                 "Reservists based at Navy Reserve Center (NRC) Kitsap, who supported the "
@@ -409,6 +410,7 @@ SERVICE = {
             "icon": "plane",
             "role": "Department Head",
             "org": 'Navy Reserve Tactical Air Control Squadron TWELVE (VTC-12) "Talons"',
+            "tag": "Air Operations",
             ("summary"): (
                 "Served as Operations Officer and Administration Officer for the reserve element "
                 "of VTC-12, an air operations unit which provides detachments of aviation "
@@ -454,6 +456,7 @@ SERVICE = {
             "icon": "zap",
             "role": "Electronic Warfare Planner",
             "org": "Joint Special Operations Task Force",
+            "tag": "Electronic Warfare",
             ("summary"): (
                 "Mobilized to active duty.  Served at a Joint Special Operations Task "
                 "Force headquarters staff as a subject matter expert in electronic warfare, "
@@ -475,6 +478,7 @@ SERVICE = {
             "icon": "check",
             "role": "Department Head and Assistant Officer-in-Charge",
             "org": "Operational Support Unit (OSU), Navy Operational Support Center Whidbey Island",
+            "tag": "Operational Support",
             ("summary"): (
                 "I joined the Navy Reserve and was initially assigned to the OSU, a unit that "
                 "served as a holding tank for people from all walks of Navy Reserve life. These "
@@ -513,6 +517,7 @@ SERVICE = {
             "icon": "plane",
             "role": "EA-6B Electronic Countermeasures Officer (ECMO)",
             "org": 'Electronic Attack Squadron 142 (VAQ-142) "Gray Wolves"',
+            "tag": "Electronic Warfare",
             ("summary"): (
                 "Served as a junior officer in VAQ-142, filling roles as Legal Officer, Personnel "
                 "Officer, Aircraft Division Officer, Naval Air Training and Operating Procedures "
