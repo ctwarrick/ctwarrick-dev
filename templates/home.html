@@ -47,11 +47,9 @@
       {% for s in stats %}
         {{ stat(s.value, label=s.label, suffix=s.get("suffix"), prefix=s.get("prefix"), tone=s.get("tone", "default")) }}
       {% endfor %}
-      <div style="flex:1; min-width:220px; align-self:center">
-        <p style="color:var(--text-secondary); margin:0; font-size:var(--text-sm); line-height:1.6">
-          Real numbers.  Real teams.  I don't do Agile theater.  I promote flow, and I'll pull the data myself to improve it.
-        </p>
-      </div>
+      <p class="statrow__note">
+        Real numbers.  Real teams.  I don't do Agile theater.  I promote flow, and I'll pull the data myself to improve it.
+      </p>
     </div>
   </div>
 </section>

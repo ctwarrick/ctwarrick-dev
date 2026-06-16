@@ -68,7 +68,7 @@
       </div>
     </header>
 
-    <main id="main">
+    <main id="main"{% if active %} class="page--{{ active }}"{% endif %}>
       {% block content %}{% endblock %}
     </main>
 
