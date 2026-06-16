@@ -57,7 +57,7 @@
 .work__period { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); letter-spacing: .02em; }
 .work__org { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--accent); margin-top: 6px; }
 .work__role { font-family: var(--font-display); font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em; margin: 0 0 4px; }
-.work__sum { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; margin: 0 0 14px; max-width: 64ch; }
+.work__sum { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; margin: 0 0 14px; }
 .work__out { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
 .work__out li { position: relative; padding-left: 20px; font-size: var(--text-sm); color: var(--text); }
 .work__out li::before { content: ""; position: absolute; left: 0; top: 8px; width: 9px; height: 9px;
