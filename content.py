@@ -213,7 +213,7 @@ PROJECTS = [
     },
     {
         "id": "pr2",
-        "name": "Delivery Forecasting Dashboards",
+        "name": "Statistical Delivery Forecasting",
         "stack": "Flask · Azure DevOps API · Azure Container Apps",
         "icon": "gauge",
         "link": "Internal · Expeditors",
@@ -239,7 +239,7 @@ PROJECTS = [
         "id": "pr3",
         "name": "Server Observability Dashboard",
         "stack": "Flask · SQLite",
-        "icon": "check",
+        "icon": "lightbulb",
         "link": "Internal · Expeditors",
         ("blurb"): (
             "One night, Chef broke.  It started spewing old versions of my team's code across "
@@ -277,6 +277,27 @@ PROJECTS = [
     },
     {
         "id": "pr5",
+        "name": "Web App Cloud Migration",
+        "stack": "GitHub Actions · Azure Container Apps",
+        "icon": "cloud",
+        "link": "Internal · Expeditors",
+        ("blurb"): (
+            "Related to two other efforts, but worth calling out on its own.  MY Statistical "
+            "Delivery Forecasting tool and the Mapping Progress Dashboard initially lived on "
+            "small on-prem Linux VMs.  As I got ready to give my exp.oCon presentation, I was "
+            "worried about the ability of a small VM to absorb 200+ attendees all trying to hit "
+            "it at once.  An architect basically dared me to set my two webapps up as Azure "
+            "Container Apps instead of on-prem ones.  This turned into a journey of teaching "
+            "myself GitHub Actions (we were migrating off GitLab), Azure Container Registries, "
+            "Azure Container Apps, Azure App Gateways, and how to tie all that together under the "
+            "hood in the cloud.  By the end, I had set up all required resources and coordinated "
+            "with the Networking and Datacenters teams for IP address space, hub-and-spoke VNet "
+            "peering, and DNS assignments for two custom vanity URLs in the company's internal "
+            "URL format, so nontechnical users wouldn't be intimidated trying to find them."
+        ),
+    },
+    {
+        "id": "pr6",
         "name": "Azure DevOps Admin Bot",
         "stack": "Python · Microsoft Graph · Azure DevOps",
         "icon": "bot",
@@ -295,7 +316,7 @@ PROJECTS = [
         ),
     },
     {
-        "id": "pr6",
+        "id": "pr7",
         "name": "Change Request Automation",
         "stack": "Python · Microsoft Graph · Jenkins · GitLab · Azure DevOps",
         "icon": "check",
@@ -316,7 +337,7 @@ PROJECTS = [
         ),
     },
     {
-        "id": "pr7",
+        "id": "pr8",
         "name": "Holographic Freight Tracking",
         "stack": "Unity · C# · HoloLens 2",
         "icon": "globe",
@@ -455,20 +476,22 @@ SERVICE = {
             "role": "Department Head and Assistant Officer-in-Charge",
             "org": "Operational Support Unit (OSU), Navy Operational Support Center Whidbey Island",
             ("summary"): (
-                "Joined the Navy Reserve and was initially assigned to the OSU, a melting pot of "
-                "people from all walks of Navy Reserve life who lived in commuting distance of the "
-                "Whidbey Island reserve center but were either assigned to support units far "
-                "away or new to the Navy Reserve and not yet assigned to a unit."
+                "I joined the Navy Reserve and was initially assigned to the OSU, a unit that "
+                "served as a holding tank for people from all walks of Navy Reserve life. These "
+                "Sailors lived within commuting distance of the Whidbey Island reserve center, "
+                "but were either assigned mobilization billets with units offsite or brand new "
+                "to the Reserve and not yet placed."
             ),
             "outcomes": [
                 (
-                    "Served as Cross-Assigned Department Head, in charge of all Navy Sailors "
+                    "Served as Cross-Assigned Department Head, in charge of all OSU Sailors "
                     "assigned to drill locally at Whidbey Island while simultaneously holding "
                     "mobilization billets on the books of units elsewhere."
                 ),
                 (
                     'Was cross-assigned myself to the "Talons" of Navy Reserve TACRON TWELVE, '
-                    "beginning what would become a 6 1/2-year affiliation with this reserve unit. "
+                    "beginning what would become a roughly 6 1/2-year affiliation with this "
+                    "reserve unit. "
                 ),
                 (
                     "Due to personnel shifts, when I became the second-most-senior officer in the "
