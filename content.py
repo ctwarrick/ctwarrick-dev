@@ -473,7 +473,7 @@ SERVICE = {
             "icon": "check",
             "role": "Department Head and Assistant Officer-in-Charge",
             "org": "Operational Support Unit (OSU), Navy Operational Support Center Whidbey Island",
-            "tag": "Operational Support",
+            "tag": "Personnel Administration/Air Operations",
             ("summary"): (
                 "I joined the Navy Reserve and was initially assigned to the OSU, a unit that "
                 "served as a holding tank for people from all walks of Navy Reserve life. These "
