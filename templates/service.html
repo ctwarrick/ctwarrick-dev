@@ -7,13 +7,13 @@
    marks the Work nav item active.
    ========================================================================= -#}
 {% extends "base.html" %}
-{% from "_macros.html" import kicker, badge, icon %}
+{% from "_macros.html" import kicker, icon %}
 
 {% block title %}Service Record — {{ site.name }}{% endblock %}
 {% block meta_description %}{{ service.intro }}{% endblock %}
 
 {% block content %}
-<section class="section">
+<section class="section cw-route-bg">
   <div class="wrap">
     <a class="backlink" style="margin-bottom:26px" href="{{ url_for('work') }}">
       {{ icon("arrow-left", 14) }} Back to the work
@@ -22,7 +22,7 @@
       <div>
         {{ kicker("Service Record", index="06", tone="gold") }}
         <h1>A career in Naval Aviation, active and reserve.</h1>
-        <p>{{ service.intro|safe }}</p>
+        <p>{{ service.intro }}</p>
       </div>
     </div>
     <div class="svstats">
@@ -43,18 +43,17 @@
         <div>
           <div class="work__head">
             <h2 class="work__role svrole"><span class="svrole__icon">{{ icon(r.icon, 18) }}</span>{{ r.role }}</h2>
-            {{ badge(r.tag, variant="gold") }}
           </div>
-          <p class="work__sum">{{ r.summary|safe }}</p>
+          <p class="work__sum">{{ r.summary }}</p>
           <ul class="work__out">
-            {% for o in r.outcomes %}<li>{{ o|safe }}</li>{% endfor %}
+            {% for o in r.outcomes %}<li>{{ o }}</li>{% endfor %}
           </ul>
         </div>
       </div>
       {% endfor %}
     </div>
     <p class="svnote">
-      Proud of it all . . . it's just not my headline anymore. <br />
+      Proud of it all . . . it's just not the headline. <br />
       <a class="inlinelink" href="{{ url_for('work') }}">Back to what I do now →</a>
     </p>
   </div>

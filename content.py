@@ -203,7 +203,7 @@ PROJECTS = [
         ("blurb"): (
             "A multi-stage job search pipeline that turns job board noise into signal.  It uses "
             "custom adapters for common ATS systems to pull job posts, based on a registry of "
-            "desired companies and what ATSes they use.  It normalized the posts into a common "
+            "desired companies and what ATSes they use.  It normalizes the posts into a common "
             "format, using a hash function for deduplication.  It then sends new postings to the "
             "Anthropic API, so an LLM can score them scoring against a pre-written candidate "
             "profile and salary floor.  Than it sends a daily email with a ranked digest of roles, "

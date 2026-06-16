@@ -47,13 +47,7 @@
 .section__head h1, .section__head h2 { font-size: clamp(1.7rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; margin: 12px 0 0; }
 .section__head p { color: var(--text-secondary); margin: 8px 0 0; max-width: 108ch; }
 
-.statrow { display: grid; grid-template-columns: repeat(5, 1fr); align-items: start;
-  column-gap: clamp(1.25rem, 3vw, 2.5rem); row-gap: clamp(1.25rem, 2.5vw, 1.75rem); }
-.statrow__note { grid-column: 1 / -1; margin: 0; max-width: 72ch;
-  padding-top: clamp(0.85rem, 1.6vw, 1.25rem); border-top: 1px solid var(--border);
-  color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
-@media (max-width: 760px) { .statrow { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 480px) { .statrow { grid-template-columns: repeat(2, 1fr); } }
+.statrow { display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 5vw, 4rem); }
 
 /* ---------- Work list ---------- */
 .worklist { display: flex; flex-direction: column; gap: 16px; }
@@ -160,6 +154,12 @@
 .cta h2 { font-size: clamp(1.9rem, 4.5vw, 3rem); letter-spacing: -0.025em; margin: 14px 0 14px; }
 .cta p { color: var(--text-secondary); max-width: 42ch; margin: 0 auto 28px; }
 .cta__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+/* CTA eyebrow — larger, bolder, and a deeper gold in light theme so "Let's talk" reads
+   clearly over the dotted ground instead of getting lost. Dark theme keeps the bright gold. */
+.cta .cw-kicker-c { font-size: var(--text-sm); font-weight: var(--fw-bold); }
+.cta .cw-kicker-c--gold { color: var(--gold-700); }
+[data-theme="dark"] .cta .cw-kicker-c--gold,
+.theme-dark .cta .cw-kicker-c--gold { color: var(--gold); }
 
 /* ---------- Homepage vertical rhythm ----------
    The home page stacks four full-padding sections (hero, sunken stats,
@@ -167,11 +167,10 @@
    of whitespace between each block, leaving the page strung-out. Tighten
    the rhythm here so it reads as one flowing splash; the single-section
    inner pages keep the roomier default. */
-.page--home .hero { padding-top: clamp(1.75rem, 3.5vw, 3.25rem); padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.page--home .section { padding: clamp(1.75rem, 3.5vw, 3rem) 0; }
-.page--home .section--sunken { padding: clamp(1.5rem, 3vw, 2.5rem) 0; }
-.page--home .section__head { margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem); }
-.page--home .cta { padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 4rem); }
+.page--home .hero { padding-bottom: clamp(1.75rem, 3.5vw, 3rem); }
+.page--home .section { padding: clamp(2rem, 4vw, 3.5rem) 0; }
+.page--home .section--sunken { padding: clamp(1.75rem, 3.5vw, 2.75rem) 0; }
+.page--home .cta { padding: clamp(2.25rem, 4.5vw, 3.5rem) 0 clamp(2.75rem, 5.5vw, 4.5rem); }
 
 /* ---------- Footer ---------- */
 .ftr { border-top: 1px solid var(--border); padding: 34px 0; }
