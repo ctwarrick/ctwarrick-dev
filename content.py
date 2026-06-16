@@ -201,9 +201,13 @@ PROJECTS = [
         "icon": "terminal",
         "link": "github.com/ctwarrick/job-agent",
         ("blurb"): (
-            "A multi-stage job search pipeline that turns job board noise into signal: ATS "
-            "ingestion adapters, hash-based listing deduplication, LLM scoring against a candidate "
-            "profile, and a ranked daily email digest."
+            "A multi-stage job search pipeline that turns job board noise into signal.  It uses "
+            "custom adapters for common ATS systems to pull job posts, based on a registry of "
+            "desired companies and what ATSes they use.  It normalized the posts into a common "
+            "format, using a hash function for deduplication.  It then sends new postings to the "
+            "Anthropic API, so an LLM can score them scoring against a pre-written candidate "
+            "profile and salary floor.  Than it sends a daily email with a ranked digest of roles, "
+            "including numerical 1-10 scores for fit and career risk."
         ),
     },
     {
@@ -261,9 +265,9 @@ PROJECTS = [
             "to more accurately describe the process of shipping freight.  This produced a knotty "
             "problem where different fields from different places in the legacy DB needed to be "
             "mapped to Silver, in the priority that business needed them.  I took the YAML files "
-            "my colleagues were doing to do the mapping and turned that data into a simple Flask "
+            "my colleagues were writing to do the mapping and turned that data into a simple Flask "
             "dashboard.  It showed not only the details of what the mappings were, but also a "
-            "used a not null-vs-total count to show the percentage of Silver fields that had been "
+            "used a not-null-vs-total count to show the percentage of Silver fields that had been "
             "successfully mapped.  Because it ingested directly from the source data, it gave "
             "senior leadership a daily up-to-date view of \"how far along are we?\" based in "
             "ground truth."
