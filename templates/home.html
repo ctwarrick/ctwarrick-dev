@@ -78,9 +78,6 @@
             {{ badge(w.tag, variant="gold" if w.get("service") else "teal") }}
           </div>
           <p class="work__sum">{{ w.summary }}</p>
-          <ul class="work__out">
-            {% for o in w.outcomes %}<li>{{ o }}</li>{% endfor %}
-          </ul>
         </div>
       </div>
       {% endfor %}
