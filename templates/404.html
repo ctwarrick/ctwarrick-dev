@@ -1,11 +1,9 @@
 {#- =========================================================================
    404.html — on-brand not-found page, translated from
-   _design_reference/NotFound.jsx in spirit (the "waveoff / foul deck" copy)
-   but built only from component classes already promoted into
-   components.css/site.css (cw-grid-bg, cw-kicker-c, cw-btn, cw-badge) — the
-   reference's bespoke .nf/.term404 styles were never promoted, so this page
-   sticks to the existing design-system primitives instead of inventing
-   unstyled classes.
+   _design_reference/NotFound.jsx: the naval "foul deck / waveoff" gag on the
+   left (anchored 4·0·4, diagnostic readout card, CTAs) and the SQL "0 rows"
+   terminal on the right. The bespoke .nf/.term404 styles are promoted into
+   site.css (see "404 page" section there).
 
    Extends base.html so the shared header/nav/footer render (FR-004).
    app.py registers the 404 error handler that renders this template.
@@ -17,18 +15,47 @@
 {% block meta_description %}Page not found — {{ site.name }}, {{ site.role }}.{% endblock %}
 
 {% block content %}
-<section class="hero cw-grid-bg">
-  <div class="wrap">
-    {{ kicker("No chance · Waveoff · Foul deck") }}
-    <h1>Waveoff, waveoff . . .</h1>
-    <p class="hero__lead">
-      Deck's not clear; the page you wanted isn't in battery.
-      {{ badge("FOUL DECK", variant="gold") }}
-    </p>
-    <p class="hero__lead">A 404 is just a query that returns no rows. Like this one!.</p>
-    <div class="hero__cta">
-      {{ button("Take it around again", variant="primary", size="lg", href=url_for("home"), icon_right=icon("arrow-right", 18)) }}
-      {{ button("Tell me what broke", variant="secondary", size="lg", href="mailto:" ~ site.email, icon=icon("mail", 18)) }}
+<section class="hero cw-grid-bg nf">
+  <div class="wrap nf__grid">
+    <div class="nf__left">
+      {{ kicker("No Chance") }}
+      <div class="nf__digits" aria-hidden="true">
+        <span>4</span>
+        <span class="nf__o" title="foul deck">{{ icon("anchor") }}</span>
+        <span>4</span>
+      </div>
+      <h1 class="nf__h1">Waveoff, waveoff . . .</h1>
+
+      <div class="nf__diag">
+        <div class="nf__diag-head">
+          {{ badge("FOUL DECK", variant="gold") }}
+          <span class="nf__diag-meta">Pass #01 · n=10,000</span>
+        </div>
+        <p class="nf__diag-text">Deck's not clear.  The page you wanted isn't in battery.</p>
+      </div>
+
+      <div class="nf__cta">
+        {{ button("Take it around again", variant="primary", size="lg", href=url_for("home"), icon_right=icon("arrow-right", 18)) }}
+        {{ button("Tell me what broke", variant="secondary", size="lg", href="mailto:" ~ site.email, icon=icon("mail", 18)) }}
+      </div>
+    </div>
+
+    <div class="nf__right">
+      <div class="term404" role="img" aria-label="A database query that returned zero rows">
+        <div class="term404__bar">
+          <span class="term404__dot"></span>
+          <span class="term404__dot"></span>
+          <span class="term404__dot"></span>
+          <span class="term404__title">psql -d ctwarrick-dev -U yourname</span>
+        </div>
+        <div class="term404__body">
+          <p><span class="term404__prompt">ctwarrick-dev=&gt;</span> SELECT * FROM pages</p>
+          <p class="term404__indent">WHERE url = <span class="term404__str">'the-one-you-wanted'</span>;</p>
+          <p class="term404__out">(0 rows)</p>
+          <p class="term404__cursor"><span class="term404__prompt">ctwarrick-dev=&gt;</span> <span class="term404__blink">▋</span></p>
+        </div>
+      </div>
+      <p class="nf__caption">A 404 is just a query that returns no rows. Like this one!</p>
     </div>
   </div>
 </section>

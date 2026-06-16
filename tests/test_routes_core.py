@@ -120,6 +120,10 @@ def test_service_returns_200_and_marks_work_active(client: FlaskClient) -> None:
 
 
 def test_service_includes_service_record_content(client: FlaskClient) -> None:
-    """`/service` renders content from SERVICE (e.g. the intro/span)."""
+    """`/service` renders content from SERVICE (e.g. the intro)."""
+    from markupsafe import escape
+
     resp = client.get("/service")
-    assert content.SERVICE["span"] in resp.text
+    # Compare against the HTML-escaped intro: Jinja autoescapes apostrophes /
+    # quotes in the copy, so the raw string is not a literal substring.
+    assert str(escape(content.SERVICE["intro"])) in resp.text
