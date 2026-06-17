@@ -381,12 +381,12 @@ SERVICE = {
             ("summary"): (
                 "Served as Training Officer and then Executive Officer of a detachment of Navy "
                 "Reservists based at Navy Reserve Center (NRC) Kitsap, who supported the "
-                "headquarters staff of U.S. Indo-Pacific Command (USINDOPACOM).  INDOPACOM is a "
-                "four-star theater headquarters responsible for planning and directing the "
-                "activities of American forces across 52 percent of the Earth's surface, an area "
-                "home to more than 50 percent of the world's population.  Per the Goldwater-"
-                "Nichols Act of 1986, its commander is a skip-level report of the President "
-                "of the United States."
+                "headquarters staff of U.S. Indo-Pacific Command (USINDOPACOM), since renamed US "
+                "Pacific Command or USPACOM.  Under either name, PACOM is a four-star theater "
+                "headquarters responsible for planning and directing the activities of American "
+                "forces across 52 percent of the Earth's surface, an area home to more than 50 "
+                "percent of the world's population.  Per the Goldwater-Nichols Act of 1986, its "
+                "commander is a skip-level report of the President of the United States."
             ),
             "outcomes": [
                 "Directly supervised four Navy officers who were line managers of a team of "
