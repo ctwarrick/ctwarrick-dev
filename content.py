@@ -88,7 +88,7 @@ WORK = [
             "disorganization and allows for idempotent database upserts.",
             "LLM scoring on fit and risk, data stored in SQLite, with a daily email "
             "digest using send-once tracking.",
-            "github.com/ctwarrick/job-agent",
+            '<a href="https://github.com/ctwarrick/job-agent" target="_blank" rel="noopener noreferrer">github.com/ctwarrick/job-agent</a>',
         ],
     },
     {
