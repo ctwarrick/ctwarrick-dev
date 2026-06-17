@@ -12,7 +12,7 @@ Run the authoring server locally:
 
 from __future__ import annotations
 
-from flask import Flask, abort, render_template
+from flask import Flask, abort, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException
 
 import content
@@ -109,6 +109,25 @@ def article(post_id: str) -> str:
     if post is None:
         abort(404)
     return render_template("article.html", active=active_for("article"), post=post)
+
+
+@app.route("/writing/images/<path:filename>")
+def post_image(filename: str) -> object:
+    """Serve images referenced from blog posts.
+
+    Posts live under `posts/` and reference images as `./images/<name>`, which
+    the browser resolves to `/writing/images/<name>` when reading an article at
+    `/writing/<post_id>`. This route closes that gap for both the dev server and
+    the Frozen-Flask build (where `freeze.py` registers a generator to discover
+    all files under `posts/images/`).
+
+    Args:
+        filename: path component after `/writing/images/`.
+
+    Returns:
+        The image file served from `posts/images/`.
+    """
+    return send_from_directory("posts/images", filename)
 
 
 @app.route("/service")

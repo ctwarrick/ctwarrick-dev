@@ -22,6 +22,7 @@ rather than shipping a broken post. An empty or absent `posts_dir` yields
 from __future__ import annotations
 
 import datetime as _dt
+import re
 from pathlib import Path
 
 import frontmatter
@@ -90,6 +91,7 @@ def load_posts(posts_dir: str = "posts") -> list[dict]:
             )
 
         body_html = _markdown.markdown(post.content, extensions=_MARKDOWN_EXTENSIONS)
+        body_html = re.sub(r'src="\./(images/[^"]+)"', r'src="/writing/\1"', body_html)
 
         entry = dict(post.metadata)
         entry["id"] = md_file.stem

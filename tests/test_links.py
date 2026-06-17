@@ -29,11 +29,20 @@ def _is_internal(href: str) -> bool:
     return True
 
 
-def _resolve(build: Path, href: str) -> Path:
-    """Map an internal href to the file it should resolve to under build/."""
+def _resolve(build: Path, href: str, html_file: Path | None = None) -> Path:
+    """Map an internal href to the file it should resolve to under build/.
+
+    Absolute paths (starting with `/`) are resolved from the build root.
+    Relative paths (e.g. `./images/foo.jpg`) are resolved relative to the
+    directory of the HTML file that contains the reference.
+    """
     path = urlsplit(href).path
     if not path or path == "/":
         return build / "index.html"
+    if not path.startswith("/"):
+        # Relative path — resolve against the containing HTML file's directory.
+        base = html_file.parent if html_file is not None else build
+        return (base / path).resolve()
     path = path.lstrip("/")
     if path.endswith("/"):
         return build / path / "index.html"
@@ -56,7 +65,7 @@ def test_internal_links_resolve_to_emitted_files(build: Path) -> None:
             href = tag.get(attr)
             if not href or not _is_internal(href):
                 continue
-            target = _resolve(build, href)
+            target = _resolve(build, href, html_file)
             if not target.is_file():
                 missing.append(f"{html_file.relative_to(build)} -> {href} (expected {target})")
 

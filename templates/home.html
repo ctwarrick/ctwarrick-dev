@@ -14,7 +14,7 @@
 <section class="hero cw-grid-bg">
   <div class="wrap hero__grid">
     <div>
-      {{ kicker("Technical Program Manager · Builder") }}
+      {{ kicker("Technical Program Manager · Builder", index="00") }}
       <h1>I make systems observable<br>and delivery <span class="accent">predictable.</span></h1>
       <p class="hero__lead">
         I'm Chris — a technical program manager who works close to the code. I use data to surface
@@ -44,14 +44,14 @@
 <section class="section section--sunken">
   <div class="wrap">
     <div class="statrow">
-      {% for s in stats %}
-        {{ stat(s.value, label=s.label, suffix=s.get("suffix"), prefix=s.get("prefix"), tone=s.get("tone", "default")) }}
-      {% endfor %}
-      <div style="flex:1; min-width:220px; align-self:center">
-        <p style="color:var(--text-secondary); margin:0; font-size:var(--text-sm); line-height:1.6">
-          Real numbers.  Real teams.  I don't do Agile theater.  I promote flow, and I'll pull the data myself to improve it.
-        </p>
+      <div class="statrow__stats">
+        {% for s in stats %}
+          {{ stat(s.value, label=s.label, suffix=s.get("suffix"), prefix=s.get("prefix"), tone=s.get("tone", "default")) }}
+        {% endfor %}
       </div>
+      <p style="color:var(--text-secondary); margin:0; font-size:var(--text-sm); line-height:1.6">
+        Real numbers.  Real teams.  I don't do Agile theater.  I promote flow, and I'll pull the data myself to improve it.
+      </p>
     </div>
   </div>
 </section>

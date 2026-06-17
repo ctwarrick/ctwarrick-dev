@@ -46,7 +46,7 @@
           </div>
           <p class="work__sum">{{ r.summary }}</p>
           <ul class="work__out">
-            {% for o in r.outcomes %}<li>{{ o }}</li>{% endfor %}
+            {% for o in r.outcomes %}<li>{{ o|safe }}</li>{% endfor %}
           </ul>
         </div>
       </div>

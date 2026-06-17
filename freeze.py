@@ -21,6 +21,7 @@ directory without mutating module-level state at import time.
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from flask import Flask, render_template
 from flask_frozen import Freezer
@@ -84,6 +85,18 @@ def build_freezer(flask_app: Flask) -> Freezer:
     def article() -> "list[dict[str, str]]":  # noqa: ANN202 - Frozen-Flask generator
         """Yield one `article` URL per post, or nothing if `posts/` is empty."""
         return [{"post_id": post["id"]} for post in posts.load_posts()]
+
+    @site_freezer.register_generator
+    def post_image() -> "list[dict[str, str]]":  # noqa: ANN202 - Frozen-Flask generator
+        """Yield one URL per file in `posts/images/`, or nothing if absent."""
+        images_dir = Path(flask_app.root_path) / "posts" / "images"
+        if not images_dir.is_dir():
+            return []
+        return [
+            {"filename": f.name}
+            for f in images_dir.iterdir()
+            if not f.name.startswith(".")
+        ]
 
     return site_freezer
 
