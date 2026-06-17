@@ -81,8 +81,13 @@ WORK = [
             "digest."
         ),
         "outcomes": [
-            "Registry-driven ingestion → normalized SQLite with hash dedup",
-            "LLM scoring with a category-risk axis, send-once tracking",
+            "Custom adapters for common Applicant Tracking Systems, normalizing data into a "
+            "common schema.",
+            "Data ingested from desired companies based on a registry of companies and their "
+            "corresponding Applicant Tracking Systems.  Hash-based deduplication prevents "
+            "disorganization and allows for idempotent database upserts.",
+            "LLM scoring on fit and risk, data stored in SQLite, with a daily email "
+            "digest using send-once tracking.",
             "github.com/ctwarrick/job-agent",
         ],
     },
@@ -204,10 +209,11 @@ PROJECTS = [
             "A multi-stage job search pipeline that turns job board noise into signal.  It uses "
             "custom adapters for common ATS systems to pull job posts, based on a registry of "
             "desired companies and what ATSes they use.  It normalizes the posts into a common "
-            "format, using a hash function for deduplication.  It then sends new postings to the "
-            "Anthropic API, so an LLM can score them scoring against a pre-written candidate "
-            "profile and salary floor.  Than it sends a daily email with a ranked digest of roles, "
-            "including numerical 1-10 scores for fit and career risk."
+            "format, using a hash function for deduplication and idempotent database upserts.  "
+            "It then sends new postings to the Anthropic API, so an LLM can score them scoring "
+            "against a pre-written candidate profile and salary floor.  Finally, it stores the "
+            "roles in SQLite and sends a daily email with a ranked digest of roles, including "
+            "numerical 1-10 scores for fit and career risk."
         ),
     },
     {
