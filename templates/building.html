@@ -29,7 +29,7 @@
         </div>
         <h2 class="proj__name">{{ p.name }}</h2>
         <div class="proj__blurb">{{ p.blurb|safe }}</div>
-        <div class="proj__link">{{ icon("git-branch", 14) }} {{ p.link }}</div>
+        <div class="proj__link">{{ icon("git-branch", 14) }} <a href="https://{{ p.link }}" class="proj__link-a" target="_blank" rel="noopener noreferrer">{{ p.link }}</a></div>
       </div>
       {% endfor %}
     </div>

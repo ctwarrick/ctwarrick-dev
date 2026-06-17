@@ -149,6 +149,8 @@
 .proj__blurb li { margin-top: 6px; }
 .proj__link { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: var(--text-xs);
   color: var(--accent-hover); letter-spacing: .01em; }
+.proj__link a { color: inherit; text-decoration: none; }
+.proj__link a:hover { text-decoration: underline; }
 
 /* ---------- CTA band ---------- */
 .cta { text-align: center; padding: clamp(3rem, 7vw, 5.5rem) 0; }
