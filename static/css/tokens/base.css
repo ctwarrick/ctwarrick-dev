@@ -177,20 +177,18 @@ img { max-width: 100%; display: block; }
 /* ruled chart lines — evenly spaced horizontals with a heavier major rule every 5th,
    echoing graph paper / an XmR control chart. Anchored to the viewport (background-attachment:
    fixed) so the rules form ONE continuous underlay that flows through section boundaries
-   instead of resetting phase per element (which looked like vertical tiling). */
+   instead of resetting phase per element (which looked like vertical tiling).
+   A single tiled linear-gradient (background-size: 100% 130px) is used so the major rule
+   at tile position 0 REPLACES the minor rule there instead of stacking on top of it —
+   two overlapping gradients caused a doubled/thicker line every 5th row. */
 .cw-rule-bg {
   background-color: var(--bg);
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--border) 55%, transparent) 0 1px,
-      transparent 1px 26px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--border-strong) 60%, transparent) 0 1.3px,
-      transparent 1.3px 130px
-    );
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 13px,
+    color-mix(in oklch, var(--border) 55%, transparent) 13px 14px,
+    transparent 14px 26px
+  );
   background-attachment: fixed;
 }
 
