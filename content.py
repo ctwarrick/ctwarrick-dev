@@ -234,10 +234,10 @@ PROJECTS = [
             "Program Increment, any arbitrary due date, or any arbitrary quantity of work "
             "items, all with 50/70/85/90 percent forecast confidence lines.</li><li>Both mean- "
             "and median-based XmR Statistical Process Control charts for Cycle Time, total Work "
-            "Item Age, and daily throughput.</li></ul>The Cycle Time and Monte Carlo pieces of "
-            "this application were the centerpiece of a 45-minute talk I gave at exp.oCon 2026, "
-            "Expeditors' annual innovation conference, called <em>Ditch the Points; Look at the "
-            "Data! Probabilistic Forecasting for Predictable Delivery</em>."
+            "Item Age, and daily throughput.</li></ul><br />The Cycle Time and Monte Carlo pieces "
+            "of this application were the centerpiece of a 45-minute talk I gave at exp.oCon "
+            "2026, Expeditors' annual innovation conference, called <em>Ditch the Points; Look at "
+            "the Data! Probabilistic Forecasting for Predictable Delivery</em>."
         ),
     },
     {
@@ -315,8 +315,10 @@ PROJECTS = [
             "ongoing project for my entire tenure.  It started out as a pile of scripts on a "
             "random on-prem Windows VM that was all I could get.  Over the years, I hosted it in "
             "GitLab, ported it to RHEL 8, and moved it to GitHub and Azure.  By the end, it was a "
-            "fully containerized small cloud-native application with its own CI/CD pipeline.  A "
-            "true microcosm of my own technical learning and growth."
+            "fully containerized small cloud-native application with its own CI/CD pipeline, "
+            "authenticating against its own managed identity in Azure and using the Microsoft "
+            "Azure DevOps Python libraries.  A true microcosm of my own technical learning and "
+            "growth."
         ),
     },
     {
@@ -367,7 +369,7 @@ SERVICE = {
     ("intro"): (
         "An EA-6B Prowler aviator turned Navy Reserve senior officer, ending as "
         "a unit Executive Officer.  It's where “exacting” became a way of working, "
-        "the same instinct I now point at delivery pipelines.  The full record, "
+        "the same instinct I now point at delivery pipelines.  The full record in detail, "
         "since you clicked through for it."
     ),
     "headline": [
@@ -388,7 +390,7 @@ SERVICE = {
                 "Served as Training Officer and then Executive Officer of a detachment of Navy "
                 "Reservists based at Navy Reserve Center (NRC) Kitsap, who supported the "
                 "headquarters staff of U.S. Indo-Pacific Command (USINDOPACOM), since renamed US "
-                "Pacific Command or USPACOM.  Under either name, PACOM is a four-star theater "
+                "Pacific Command (USPACOM).  By either name, PACOM is a four-star theater "
                 "headquarters responsible for planning and directing the activities of American "
                 "forces across 52 percent of the Earth's surface, an area home to more than 50 "
                 "percent of the world's population.  Per the Goldwater-Nichols Act of 1986, its "
@@ -539,8 +541,8 @@ SERVICE = {
                 (
                     "Supported multiple large force exercises hosted by the US Air Force at Nellis "
                     "Air Force Base, Nevada, as well as participating in the pre-deployment workup "
-                    "cycle for CVW-11, both on board USS <em>Nimitz</em> and at Naval Air Station "
-                    "Fallon, Nevada."
+                    "cycle for Carrier Air Wing Eleven, both on board USS <em>Nimitz</em> and at "
+                    "Naval Air Station Fallon, Nevada."
                 ),
                 (
                     "Flew off USS <em>Nimitz</em> during pre-deployment workups in support of the "
