@@ -7,7 +7,7 @@ featured: true
 ---
 
 Well, I guess if I'm going to have a website, I might as well have a spot for my own thoughts.  
-Free of the LinkedIn algorithm, self-hosted, my own spot to write about . . . well . . . anything.
+Free of the LinkedIn algorithm, self-hosted, my own spot to write about, well, anything.
 Almost anything, anyway.  As you can tell, it's a site with my professional resume and my 
 professional qualifications, so I'm not about to go join the toxic stew that is modern social 
 media discourse and start writing on topics guaranteed to tick off half my audience.  Reddit, as
