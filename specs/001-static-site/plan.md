@@ -128,8 +128,8 @@ static/
 │   ├── css/                # styles.css → components.css → site.css (+ tokens/*)   [from handoff]
 │   ├── fonts/              # Old Timey Code + NEW self-hosted Space Grotesk & IBM Plex Sans (woff2)
 │   └── img/                # headshot + any post images (all self-hosted)
-staticwebapp.config.json    # NEW: SWA 404 override, MIME, www→apex redirect
-infra/                      # NEW: main.bicep + main.bicepparam (SWA + custom domain, new RG)
+staticwebapp.config.json    # NEW: SWA 404 override, MIME types, HSTS header
+infra/                      # NEW: main.bicep + dns.bicep + static-web-app.bicep + main.bicepparam (SWA + Azure DNS zone, new RG)
 scripts/validate-infra.sh   # NEW: az bicep build-params compile check
 .github/workflows/deploy.yml# NEW: uv sync → pytest → freeze → static-web-apps-deploy
 tests/                      # pytest: routes, post loader, freeze output, link/attack-surface invariants

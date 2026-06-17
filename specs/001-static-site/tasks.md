@@ -93,7 +93,7 @@ deploys with no manual server step.
 
 - [X] T016 [US2] Implement `freeze.py` (Frozen-Flask): `FREEZER_DESTINATION="build"`, `FREEZER_REMOVE_EXTRA_FILES=True`, a URL generator yielding one `article` URL per post (guard zero/absent posts), and emit `build/404.html` — green for T012/T013/T015
 - [X] T017 [P] [US2] Create `templates/404.html` (extends `base.html`, on-brand) and register the 404 error handler in `app.py`
-- [X] T018 [US2] Create `staticwebapp.config.json`: `responseOverrides."404".rewrite="/404.html"`, woff2/json MIME, and `www`→apex 301 redirect (per static-hosting contract)
+- [X] T018 [US2] Create `staticwebapp.config.json`: `responseOverrides."404".rewrite="/404.html"`, woff2/json MIME, and HSTS globalHeaders (www→apex 301 is the SWA default-domain setting, not a route rule)
 - [X] T019 [P] [US2] Create `infra/main.bicep` + `infra/main.bicepparam` provisioning an Azure Static Web App (Free SKU) into a **new** resource group (name + region in the param file)
 - [X] T020 [P] [US2] Create `scripts/validate-infra.sh` running `az bicep build-params --file infra/main.bicepparam`; run it and confirm it compiles
 - [X] T021 [US2] Create `.github/workflows/deploy.yml`: on push to `main`, `uv sync` → `uv run pytest` → **secret-scan gate** (`git ls-files`-scoped grep for committed deploy-token / publish-profile / subscription·tenant-id patterns; **fail the job** if any match, SC-009/FR-022) → `uv run python freeze.py` → `Azure/static-web-apps-deploy` (deploy token from runner secret store only; `skip_app_build: true`, output = `build/`)

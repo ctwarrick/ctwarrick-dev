@@ -1,25 +1,20 @@
-// infra/static-web-app.bicep — the Azure Static Web App (Free SKU) and its
-// optional custom-domain bindings, deployed into the resource group created
-// by main.bicep.
+// infra/static-web-app.bicep — the Azure Static Web App (Free SKU), deployed
+// into the resource group created by main.bicep.
 //
-// Apex (`customDomainName`) is canonical (FR-013); `www` (`wwwDomainName`),
-// once bound and DNS-validated, redirects to it per
-// contracts/static-hosting.md and staticwebapp.config.json. Both domain
-// params default to empty so the SWA can be created before DNS is delegated
-// to Azure DNS (research.md §7) — bindings are added in a follow-up deploy
-// once the GoDaddy nameservers point at the Azure DNS zone.
+// Custom domains are intentionally NOT modeled here. Apex (`ctwarrick.dev`) is
+// canonical (FR-013) and `www` 301-redirects to it via the SWA default-domain
+// setting; both are bound on this app through the portal's "Custom Domain on
+// Azure DNS" flow once DNS is delegated to the Azure DNS zone (research.md §7).
+// A declarative apex bind is not possible in a single deployment because the
+// apex `dns-txt-token` validation token is not exposed as a Bicep/ARM output,
+// so the customDomains resource deadlocks in "Validating"
+// (Azure/static-web-apps#1652).
 
 @description('Name of the Azure Static Web App resource.')
 param staticWebAppName string
 
 @description('Azure region for the Static Web App.')
 param location string
-
-@description('Apex custom domain (canonical), e.g. ctwarrick.dev. Empty = not bound yet.')
-param customDomainName string = ''
-
-@description('www custom domain that redirects to the apex, e.g. www.ctwarrick.dev. Empty = not bound yet.')
-param wwwDomainName string = ''
 
 resource staticSite 'Microsoft.Web/staticSites@2024-04-01' = {
   name: staticWebAppName
@@ -34,19 +29,6 @@ resource staticSite 'Microsoft.Web/staticSites@2024-04-01' = {
     allowConfigFileUpdates: true
     stagingEnvironmentPolicy: 'Disabled'
   }
-}
-
-resource apexDomain 'Microsoft.Web/staticSites/customDomains@2024-04-01' = if (!empty(customDomainName)) {
-  parent: staticSite
-  name: customDomainName
-}
-
-resource wwwDomain 'Microsoft.Web/staticSites/customDomains@2024-04-01' = if (!empty(wwwDomainName)) {
-  parent: staticSite
-  name: wwwDomainName
-  dependsOn: [
-    apexDomain
-  ]
 }
 
 @description('The default *.azurestaticapps.net hostname of the Static Web App.')

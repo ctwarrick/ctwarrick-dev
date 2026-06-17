@@ -4,9 +4,7 @@
 // Why: per the constitution's attack-surface rule and FR-012/FR-013, production
 // is a single Azure Static Web App (Free SKU) serving pre-rendered static
 // files — no app server, no database. This template creates a new resource
-// group and the Static Web App, and (optionally) binds the apex and `www`
-// custom domains so `www.ctwarrick.dev` can redirect to the canonical apex
-// `ctwarrick.dev` (contracts/static-hosting.md, research.md §7).
+// group, the Static Web App, and the Azure DNS zone for the apex domain.
 //
 // Scope: subscription (so the resource group itself is created here).
 // Deploy with:
@@ -15,11 +13,12 @@
 //     --template-file infra/main.bicep \
 //     --parameters infra/main.bicepparam
 //
-// Custom-domain binding requires DNS validation (Azure DNS zone delegated from
-// GoDaddy, per research.md §7) and is provisioned after the SWA exists; the
-// `customDomainName`/`wwwDomainName` parameters are optional and the
-// `customDomains` resources are only created when they are non-empty, so the
-// base SWA can be deployed first and domains added once DNS is delegated.
+// Custom-domain binding is NOT modeled here. The apex (`ctwarrick.dev`,
+// canonical) and the `www` redirect are bound on the Static Web App via the
+// portal's "Custom Domain on Azure DNS" flow after DNS is delegated from
+// GoDaddy to the `nameServers` output below — the apex `dns-txt-token`
+// validation token is not exposed as a Bicep output, so a declarative bind
+// deadlocks (Azure/static-web-apps#1652; research.md §7).
 
 targetScope = 'subscription'
 
@@ -32,11 +31,8 @@ param location string
 @description('Name of the Azure Static Web App resource.')
 param staticWebAppName string
 
-@description('Apex custom domain (canonical), e.g. ctwarrick.dev. Leave empty to skip binding until DNS is delegated.')
-param customDomainName string = ''
-
-@description('www custom domain that redirects to the apex, e.g. www.ctwarrick.dev. Leave empty to skip binding until DNS is delegated.')
-param wwwDomainName string = ''
+@description('DNS zone (apex domain) name, e.g. ctwarrick.dev.')
+param dnsZoneName string
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
@@ -49,10 +45,19 @@ module staticWebApp 'static-web-app.bicep' = {
   params: {
     staticWebAppName: staticWebAppName
     location: location
-    customDomainName: customDomainName
-    wwwDomainName: wwwDomainName
+  }
+}
+
+module dns 'dns.bicep' = {
+  name: 'dns'
+  scope: rg
+  params: {
+    dnsZoneName: dnsZoneName
   }
 }
 
 @description('The default *.azurestaticapps.net hostname of the Static Web App.')
 output defaultHostname string = staticWebApp.outputs.defaultHostname
+
+@description('Azure nameservers for the DNS zone — set these at GoDaddy to delegate DNS.')
+output nameServers array = dns.outputs.nameServers

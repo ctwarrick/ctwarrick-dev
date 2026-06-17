@@ -75,10 +75,15 @@ or a post missing required front-matter must make the suite/freeze **fail**
 ## Deploy (US2 / FR-013, FR-014, SC-004, SC-005) — human-gated
 
 1. Validate infra: `scripts/validate-infra.sh`.
-2. Provision: deploy `infra/main.bicep` (new resource group) — creates the SWA.
-3. Bind custom domains (apex + `www`); delegate DNS to the Azure DNS zone;
-   `www` 301-redirects to apex.
+2. Provision: deploy `infra/main.bicep` (new resource group) — creates the SWA
+   and the Azure DNS zone; note the `nameServers` output.
+3. **Delegate DNS first**: point GoDaddy's nameservers at the zone's
+   `nameServers` and let them propagate; **then** bind apex + `www` via the SWA
+   portal's "Custom Domain on Azure DNS" flow (it auto-creates the validation +
+   alias/CNAME records — don't pre-create them) and set the apex as the
+   **default domain** so `www` 301-redirects to it.
 4. Push to `main` → GitHub Actions runs pytest + freeze + deploy.
-5. **Validate:** `https://ctwarrick.dev` loads with a valid cert; browser network
-   tab shows **zero** third-party requests; a trivial content push is live
-   within 10 minutes.
+5. **Validate:** `https://ctwarrick.dev` loads with a valid cert (first-time
+   managed-cert issuance after binding takes minutes-to-hours — distinct from
+   the content-push SLA below); browser network tab shows **zero** third-party
+   requests; a trivial content push is live within 10 minutes.

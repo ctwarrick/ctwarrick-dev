@@ -142,6 +142,16 @@ complicates managed-cert issuance. Make `www` canonical — rejected by the
 clarification (apex is canonical). Azure Front Door for redirect — rejected:
 unnecessary cost/surface for a personal site SWA already handles.
 
+> **Update (2026-06-17):** the apex binding can't be modeled in single-pass
+> Bicep — the `dns-txt-token` validation token isn't exposed as a Bicep/ARM
+> output, so a declarative apex `customDomains` resource deadlocks in
+> "Validating" (Azure/static-web-apps#1652). Final approach: IaC owns only the
+> Azure DNS zone (`infra/dns.bicep`). **Delegate GoDaddy → Azure DNS first**,
+> then bind apex + `www` via the portal's "Custom Domain on Azure DNS" flow,
+> which auto-creates the TXT + ALIAS/CNAME records (don't pre-create them). The
+> `www`→apex 301 is the SWA **default-domain** setting, not a
+> `staticwebapp.config.json` route (SWA route rules can't match on hostname).
+
 ## 8. Tooling, env, and validate-infra
 
 **Decision**: Manage the environment with **uv** (`uv sync`, `uv run …`); pin

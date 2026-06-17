@@ -14,7 +14,9 @@
   paths serve the styled 404 (FR-004).
 - **MIME**: ensure `.woff2`, `.webmanifest`, `.json` content types as needed.
 - **Canonical redirect**: `www.ctwarrick.dev` 301-redirects to apex
-  `ctwarrick.dev` (clarified 2026-06-15) at the SWA edge.
+  `ctwarrick.dev` (clarified 2026-06-15) at the SWA edge — implemented by
+  setting the apex as the SWA **default domain**, not a route rule here (SWA
+  route rules can't match on hostname).
 - **No headers that load external origins** (no third-party CSP report endpoints,
   no remote anything).
 

@@ -26,7 +26,7 @@ database, no server-side state.
 | Design system | `static/css/` | `styles.css` (tokens) → `components.css` → `site.css`; load order matters |
 | Post loader | `posts.py` | `load_posts()` — front-matter + Markdown → the shape templates consume |
 | Freeze | `freeze.py` | Frozen-Flask renders all routes to `build/` |
-| Infra | `infra/*.bicep*` | Azure Static Web App + custom domain, in its own resource group |
+| Infra | `infra/*.bicep*` | Azure Static Web App + Azure DNS zone, in its own resource group (custom-domain binding is a manual portal step post-DNS-delegation) |
 | Deploy | `.github/workflows/` | freeze + `Azure/static-web-apps-deploy` on push to `main` |
 
 ## Commands

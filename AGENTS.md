@@ -28,7 +28,7 @@ Pipeline: **author (Flask/Jinja + Markdown) → freeze (Frozen-Flask) → deploy
 | Templates | `templates/*.html` | `base.html` shell, `_macros.html` design-system components, one template per page |
 | Design system | `static/css/` | `styles.css` (token manifest) → `components.css` → `site.css`; load order matters |
 | Freeze | `freeze.py` | Frozen-Flask renders all routes to `build/` |
-| Infra | `infra/*.bicep*` | Azure Static Web App + custom domain, deployed to a new resource group |
+| Infra | `infra/*.bicep*` | Azure Static Web App + Azure DNS zone, deployed to a new resource group (custom-domain binding is manual, post-DNS-delegation) |
 | Deploy | `.github/workflows/` | freeze + `Azure/static-web-apps-deploy` |
 
 The current source of truth for visuals and unbuilt pages is
