@@ -6,7 +6,7 @@
 .wrap--narrow { max-width: var(--container-md); }
 
 /* ---------- Header ---------- */
-.hdr { position: sticky; top: 0; z-index: 40; background: color-mix(in oklch, var(--bg) 86%, transparent);
+.hdr { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 86%, transparent);
   backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--border); }
 .hdr__in { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .hdr__nav { display: flex; align-items: center; gap: 4px; }
